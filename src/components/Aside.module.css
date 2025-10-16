@@ -1,0 +1,27 @@
+.asideContainer {
+  border-right: 0.1rem solid var(--ternary-color-weak);
+}
+.asideContainer a {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-bottom: 0.4rem;
+  padding: 1rem 1rem;
+  border-radius: 0.3rem;
+  margin-right: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.12s linear;
+}
+.asideContainer a:hover {
+  background-color: var(--primary-color-weak);
+}
+.asideContainer a:hover svg {
+  color: var(--primary-color);
+}
+
+.activeNav {
+  background-color: var(--primary-color-weak);
+}
+.activeNav svg {
+  color: var(--primary-color) !important;
+}

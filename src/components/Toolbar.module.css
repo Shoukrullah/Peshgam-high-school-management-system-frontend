@@ -1,0 +1,86 @@
+.ToolbarContainer {
+    /* background-color: lightgray; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.rightSideTool {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+.searchBarContainer {
+    position: relative;
+}
+.searchBarContainer label {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: .5rem;
+    color: var(--secondary-color);
+    transform: translateY(-50%);
+}
+
+.searchBarContainer input {
+    border-radius: .5rem;
+    padding: .5rem .7rem;
+    border: 1px solid var(--dark-brand-4);
+    outline: none;
+    padding-left: 3rem;
+    overflow: hidden;
+}
+.searchBarContainer input:focus {
+    border-color: var(--dark-brand-1);
+    /* outline: 10px solid var(--primary-color); */
+    /* outline-offset: 2px; */
+}
+.searchBarContainer input::placeholder {
+    color: var(--dark-brand-3);
+}
+
+.Buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.Buttons div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.12s linear;
+}
+.sortBtn {
+    background-color: var(--yellow-brand-2);
+    cursor: pointer;
+    border-radius: 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+
+}
+.Buttons div:hover {
+    background-color: var(--yellow-brand-1);
+}
+.Buttons div:active {
+    transform: translateY(-1px);
+}
+.addBtn {
+    background-color: var(--primary-color-weak);
+    cursor: pointer;
+    border-radius: 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+.addBtn:hover {
+    color: var(--light-brand-1);
+    background-color: var(--primary-color) !important;
+}
+
+
+
+
+
+
+.Buttons div svg {
+    /* width: 90%;
+    height: 90%; */
+}

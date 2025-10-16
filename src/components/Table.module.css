@@ -1,0 +1,64 @@
+.tableContainer {
+    margin-top: 2rem;
+    width: 100%;
+    border-collapse: collapse;
+    outline: none;
+    font-size: 1.4rem;
+
+}
+.tableContainer th {
+    text-align: start;
+    color: var(--dark-brand-3);
+    font-weight: 100;
+    border-radius: .5rem;
+    padding: 0.5rem  .3rem 1rem 0.3rem;
+}
+.tableContainer tr,.tableContainer td {
+    padding: 1rem .5rem;
+}
+.tableContainer tbody tr:nth-child(odd) {
+    background-color: var(--secondary-color-weak);
+}
+
+
+.imgContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.imgContainer div:first-child {
+    width: 3rem;
+    height: 3rem;
+}
+.imgContainer img {
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.editButtonsContainer div {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-brand-1);
+    border-radius: .3rem;
+    cursor: pointer;
+    color: var(--dark-brand-2);
+    transition: all 0.1s linear;
+}
+.editButtonsContainer div:hover {
+    background-color: var(--primary-color-weak) ;
+}
+.editButtonsContainer div:active {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px 2px  rgba(0, 0, 0, 0.105);
+}
+
+.editButtonsContainer div:hover svg {
+    color: var(--secondary-color);
+}

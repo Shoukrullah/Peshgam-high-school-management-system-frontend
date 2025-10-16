@@ -1,0 +1,52 @@
+.form {
+  background-color: var(--light-brand-1);
+  width: 60rem;
+  margin-top: -10rem;
+  padding: 2rem 1.5rem;
+  border-radius: 0.4rem;
+  backdrop-filter: bluer(0.4rem);
+  box-shadow: 0 1px 3px 5px rgba(0, 0, 0, 0.285);
+  position: relative;
+}
+.allInputsContainer {
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+  position: relative;
+  font-size: 1.4rem;
+  padding: 1rem;
+}
+.form label {
+  color: var(--dark-brand-1);
+  font-size: small;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.crossContainer {
+    content: '';
+    position: absolute;
+    top: 2.3rem;
+    right: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-brand-1);
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.073);
+    cursor: pointer;
+}
+.crossContainer svg {
+    padding: .2rem;
+}
+.crossContainer:hover {
+    background-color: var(--light-brand-1);
+    box-shadow: none;
+    color: var(--primary-color) !important;
+}
+.crossContainer:active {
+    transform: translateY(-1px);
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.073);
+
+}
