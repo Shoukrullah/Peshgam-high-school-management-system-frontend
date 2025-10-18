@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-import FormStudent from "../components/FormStudent";
+import CreateStudent from "../components/CreateStudent";
 import GlobalModalWindow from "../components/GlobalModalWindow";
 import Table from "../components/Table";
 import Toolbar from "../components/Toolbar";
@@ -7,11 +7,12 @@ import { useAddQuery } from "../hooks/useAddQuery";
 import useStudents from "../hooks/useStudents";
 import DeleteStudent from "../components/DeleteStudent";
 import Pagination from "../components/pagination/Pagination";
+import UpdateStudent from "../components/UpdateStudent";
 // const length = getQuery('edit')?.length
 // console.log(getQuery('edit')?.charAt(length! -1 ))
 
 function Student() {
-  const {getQuery} = useAddQuery();
+  const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
 
   const { data, isLoading, error } = useStudents(currentPage);
@@ -42,7 +43,7 @@ function Student() {
       </div>
       {getQuery("add") === "student" && (
         <GlobalModalWindow>
-          <FormStudent />
+          <CreateStudent />
         </GlobalModalWindow>
       )}
       {getQuery("edit")?.includes("students-delete") && (
@@ -50,7 +51,11 @@ function Student() {
           <DeleteStudent />
         </GlobalModalWindow>
       )}
-      {getQuery("edit")?.includes('students-update') && <GlobalModalWindow><p>I am update</p></GlobalModalWindow>}
+      {getQuery("edit")?.includes("students-update") && (
+        <GlobalModalWindow>
+          <UpdateStudent />
+        </GlobalModalWindow>
+      )}
     </>
   );
 }
