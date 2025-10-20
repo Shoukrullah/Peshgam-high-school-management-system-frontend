@@ -8,11 +8,16 @@ import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-function DeleteStudent() {
+interface Props {
+  urlRoute: string;
+  singleRoute: string;
+}
+
+function DeleteUser({ singleRoute, urlRoute }: Props) {
   const { getQuery } = useAddQuery();
   const navigate = useNavigate();
   const getId = () => {
-    const isToDelete = getQuery("edit")?.includes("students-delete");
+    const isToDelete = getQuery("edit")?.includes(`${urlRoute}-delete`);
     if (!isToDelete) return;
     const id = extractNumbers(getQuery("edit") as string);
     return parseInt(id);
@@ -22,11 +27,11 @@ function DeleteStudent() {
     const id = getId();
     if (!id) return;
     try {
-      await axiosInstance.delete(`/api/students/${id}`);
-      toast.success("Student deleted successfully!");
-      navigate("/students");
+      await axiosInstance.delete(`/api/${urlRoute}/${id}`);
+      toast.success(singleRoute + " deleted successfully!");
+      navigate(-1);
     } catch (error) {
-      toast.error("Failed to delete student!");
+      toast.error(`Failed to delete ${singleRoute}!`);
       console.error(error);
     }
   };
@@ -41,7 +46,7 @@ function DeleteStudent() {
   return (
     <div style={style}>
       <p style={{ paddingBottom: "2rem", fontSize: "1.5rem" }}>
-        Are sure of deleting the student?
+        Are sure of deleting the {singleRoute}?
       </p>
       <div className="flex justifyEnd">
         <Button
@@ -64,4 +69,4 @@ function DeleteStudent() {
   );
 }
 
-export default DeleteStudent;
+export default DeleteUser;

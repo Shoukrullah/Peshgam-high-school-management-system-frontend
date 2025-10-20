@@ -1,17 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import axiosInstance from "../services/axios-instance";
-import type { Classes } from "../types/classes";
+import type { classes } from "../types/classes";
 
-const useClasses = () => {
+interface ClassesDateShape {
+  classes: classes[];
+  totalPages: number;
+}
+
+const useClasses = (page?: number) => {
   const fetchClasses = async () => {
-    const req = await axiosInstance.get<Classes[]>("/api/classes");
+    const req = await axiosInstance.get<ClassesDateShape>("/api/classes", {
+      params: {
+        page,
+      },
+    });
     return req.data;
   };
 
   return useQuery({
-    queryKey: ["classes"],
+    queryKey: ["classes", page],
     queryFn: fetchClasses,
     staleTime: 1000 * 60, // i minute
+    placeholderData: keepPreviousData,
   });
 };
-export default useClasses
+export default useClasses;

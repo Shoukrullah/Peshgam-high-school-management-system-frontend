@@ -1,6 +1,6 @@
+import { Toaster } from "react-hot-toast";
 import { Outlet } from "react-router-dom";
 import Aside from "../components/Aside";
-import { Toaster } from "react-hot-toast";
 function Layout() {
   return (
     <>

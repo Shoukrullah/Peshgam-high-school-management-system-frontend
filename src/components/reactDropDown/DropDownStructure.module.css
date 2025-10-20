@@ -55,14 +55,14 @@
   scrollbar-width: auto;
 }
 .container ul::-webkit-scrollbar {
-  width: 0.8rem;
+  width: .6rem;
 }
 .container ul::-webkit-scrollbar-track {
-  background-color: var(--light-brand-1);
-  border-radius: 0.4rem;
+  background-color: var(--primary-color-weak);
+  border-radius: 1rem;
 }
 .container ul::-webkit-scrollbar-thumb {
-  background-color: var(--light-brand-1);
+  background-color: var(--secondary-color);
   border-radius: 1rem;
 }
 

@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import delay from "delay";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -8,18 +8,14 @@ import { useAddQuery } from "../hooks/useAddQuery";
 import useBranches from "../hooks/useBranches";
 import useClasses from "../hooks/useClasses";
 import axiosInstance from "../services/axios-instance";
-import { updateStudentSchema } from "../types/schemas/updateStudentSchema";
+import studentsSchema from "../types/schemas/studentsSchema";
+import type { studentShape } from "../types/students";
 import extractNumbers from "../utils/extractNumber";
 import gender from "../utils/Gender";
+import status from "../utils/status";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
-import studentsSchema from "../types/schemas/studentsSchema";
-import useStudents from "../hooks/useStudents";
-import { useEffect, useState } from "react";
-import type { studentShape } from "../types/students";
-import axios from "axios";
-import status from "../utils/status";
 type FormShape = z.infer<typeof studentsSchema>;
 
 function UpdateStudent() {
@@ -53,7 +49,7 @@ function UpdateStudent() {
         phone: studentData.phone || undefined,
         dob: studentData.dob?.toString() || undefined,
         gender: studentData.gender,
-        status: studentData.status
+        status: studentData.status,
       });
     }
   }, [studentData]);
@@ -191,7 +187,7 @@ function UpdateStudent() {
           control={control}
           render={({ field }) => (
             <DropDownStructure
-              options={branches || []}
+              options={branches?.branches || []}
               labelKey="name"
               valueKey="id"
               margin=".5rem 0"
@@ -210,7 +206,7 @@ function UpdateStudent() {
           control={control}
           render={({ field }) => (
             <DropDownStructure
-              options={classes || []}
+              options={classes?.classes || []}
               labelKey="grade"
               valueKey="id"
               margin=".5rem 0"
@@ -222,7 +218,7 @@ function UpdateStudent() {
           )}
         />
       </div>
-       <div>
+      <div>
         <label htmlFor="status">Status</label>
         <Controller
           name="status"

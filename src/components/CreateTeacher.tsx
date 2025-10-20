@@ -5,18 +5,16 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import useBranches from "../hooks/useBranches";
-import useClasses from "../hooks/useClasses";
 import axiosInstance from "../services/axios-instance";
-import studentsSchema from "../types/schemas/studentsSchema";
-import gender from "../utils/Gender";
+import teacherSchema from "../types/schemas/teacherSchema";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
-type FormShape = z.infer<typeof studentsSchema>;
+import degree from "../utils/degree";
+type FormShape = z.infer<typeof teacherSchema>;
 
-function CreateStudent() {
+function CreateTeacher() {
   const { data: branches } = useBranches();
-  const { data: classes } = useClasses();
   const navigate = useNavigate();
   const {
     register,
@@ -24,12 +22,11 @@ function CreateStudent() {
     reset,
     control,
     formState: { errors, dirtyFields, isSubmitting },
-  } = useForm<FormShape>({ resolver: zodResolver(studentsSchema) });
+  } = useForm<FormShape>({ resolver: zodResolver(teacherSchema) });
 
   const onSubmit = async (data: FormShape) => {
     try {
-      await delay(10000);
-      const req = await axiosInstance.post<FormShape>("/api/students", data);
+      const req = await axiosInstance.post<FormShape>("/api/teachers", data);
       const name = req.data;
       toast.success(
         `${name.firstName} ${name.lastName} is added successfully`,
@@ -53,7 +50,7 @@ function CreateStudent() {
   return (
     <Form
       onSubmit={handleSubmit(onSubmit)}
-      HeadingLabel="Create a new Student"
+      HeadingLabel="Create a new Teacher"
       isSubmitting={isSubmitting}
     >
       <div>
@@ -79,19 +76,6 @@ function CreateStudent() {
         />
       </div>
       <div>
-        <label htmlFor="dob">Birth-date</label>
-        <Input
-          isWithZod
-          dirtyFields={dirtyFields}
-          errors={errors}
-          id="dob"
-          register={register}
-          registerValue="dob"
-          type="date"
-          color="var(--dark-brand-3)"
-        />
-      </div>
-      <div>
         <label htmlFor="address">Address</label>
         <Input
           isWithZod
@@ -103,26 +87,6 @@ function CreateStudent() {
           placeholder="Share-now, Kabul"
         />
       </div>
-      <div>
-        <label htmlFor="gender">Gender</label>
-        <Controller
-          name="gender"
-          control={control}
-          render={({ field }) => (
-            <DropDownStructure
-              options={gender}
-              labelKey="label"
-              valueKey="value"
-              margin=".5rem 0"
-              widthBtn="15rem"
-              widthDropBtn="90%"
-              heightForButton="2.7rem"
-              field={field}
-            />
-          )}
-        />
-      </div>
-
       <div>
         <label htmlFor="phone">Phone</label>
         <Input
@@ -155,15 +119,15 @@ function CreateStudent() {
         />
       </div>
       <div>
-        <label htmlFor="classId">Class</label>
+        <label htmlFor="degree">Degree</label>
         <Controller
-          name="classId"
+          name="degree"
           control={control}
           render={({ field }) => (
             <DropDownStructure
-              options={classes?.classes || []}
-              labelKey="grade"
-              valueKey="id"
+              options={degree || []}
+              labelKey="degree"
+              valueKey="value"
               margin=".5rem 0"
               widthBtn="15rem"
               widthDropBtn="90%"
@@ -177,4 +141,4 @@ function CreateStudent() {
   );
 }
 
-export default CreateStudent;
+export default CreateTeacher;

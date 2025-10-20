@@ -2,7 +2,7 @@ import noUser from "../assets/pictures/default-user.webp";
 import { type studentShape } from "../types/students";
 
 interface Props {
-  stu: studentShape;
+  stu: any;
 }
 
 function TableImage({ stu }: Props) {

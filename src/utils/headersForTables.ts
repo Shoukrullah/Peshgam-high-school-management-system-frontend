@@ -4,7 +4,19 @@ export const studentHeader: string[] = [
   "Branch",
   "Phone",
   "Address",
-  ""
+  "",
 ];
 
+export const teacherHeader: string[] = [
+  "Full Name",
+  "Branch",
+  "Phone",
+  "Degree",
+  "Address",
+  "",
+];
+
+export const classHeader: string[] = ["Grade", "Branch", "Teacher", ""];
+
+export const branchHeader: string[] = ["Name", "Address", "City", ""];
 

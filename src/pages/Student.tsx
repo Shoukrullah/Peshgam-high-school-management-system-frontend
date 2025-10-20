@@ -1,13 +1,13 @@
-import { Toaster } from "react-hot-toast";
 import CreateStudent from "../components/CreateStudent";
+import DeleteUser from "../components/DeleteUser";
 import GlobalModalWindow from "../components/GlobalModalWindow";
+import Pagination from "../components/pagination/Pagination";
 import Table from "../components/Table";
 import Toolbar from "../components/Toolbar";
+import UpdateStudent from "../components/UpdateStudent";
 import { useAddQuery } from "../hooks/useAddQuery";
 import useStudents from "../hooks/useStudents";
-import DeleteStudent from "../components/DeleteStudent";
-import Pagination from "../components/pagination/Pagination";
-import UpdateStudent from "../components/UpdateStudent";
+import { studentHeader } from "../utils/headersForTables";
 // const length = getQuery('edit')?.length
 // console.log(getQuery('edit')?.charAt(length! -1 ))
 
@@ -38,7 +38,13 @@ function Student() {
     <>
       <div>
         <Toolbar add="student" route="Students" />
-        <Table data={sortedData} isLoading={isLoading} error={error} />
+        <Table
+          data={sortedData}
+          isLoading={isLoading}
+          error={error}
+          headerData={studentHeader}
+          type="students"
+        />
         <Pagination totalPages={data?.totalPages || 1} />
       </div>
       {getQuery("add") === "student" && (
@@ -48,7 +54,7 @@ function Student() {
       )}
       {getQuery("edit")?.includes("students-delete") && (
         <GlobalModalWindow>
-          <DeleteStudent />
+          <DeleteUser singleRoute="Student" urlRoute="students" />
         </GlobalModalWindow>
       )}
       {getQuery("edit")?.includes("students-update") && (

@@ -23,8 +23,7 @@ function Pagination({ totalPages }: PaginationProps) {
       setQuery("page", page.toString());
     }
   };
-
-  if (totalPages <= 1) return null;
+  if (totalPages <= 1 ) return;
 
   return (
     <div className={styles.paginationContainer}>

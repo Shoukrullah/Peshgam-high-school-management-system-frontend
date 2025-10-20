@@ -1,60 +1,100 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import delay from "delay";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { useAddQuery } from "../hooks/useAddQuery";
 import useBranches from "../hooks/useBranches";
-import useClasses from "../hooks/useClasses";
 import axiosInstance from "../services/axios-instance";
-import studentsSchema from "../types/schemas/studentsSchema";
-import gender from "../utils/Gender";
+import teacherSchema from "../types/schemas/teacherSchema";
+import type { teacherShape } from "../types/teachers";
+import degree from "../utils/degree";
+import extractNumbers from "../utils/extractNumber";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
-type FormShape = z.infer<typeof studentsSchema>;
+type FormShape = z.infer<typeof teacherSchema>;
 
-function CreateStudent() {
+function UpdateTeacher() {
   const { data: branches } = useBranches();
-  const { data: classes } = useClasses();
+  console.log(branches)
+  const { getQuery } = useAddQuery();
   const navigate = useNavigate();
+  const [teacherData, setTeacherData] = useState<teacherShape | null>(null);
+  const getId = () => {
+    const editQuery = getQuery("edit");
+    if (!editQuery?.includes("teachers-update")) return;
+    const id = extractNumbers(editQuery);
+    return parseInt(id);
+  };
+  const id = getId();
+
+  useEffect(() => {
+    const fetchUniqueTeacher = async () => {
+      const req = await axiosInstance.get("/api/teachers/" + id);
+      setTeacherData(req.data);
+    };
+    fetchUniqueTeacher();
+  }, [id]);
+  console.log(teacherData)
+  useEffect(() => {
+    if (teacherData) {
+      reset({
+        firstName: teacherData?.firstName,
+        lastName: teacherData?.lastName,
+        branchId: teacherData?.branchId,
+        degree: teacherData?.degree || undefined,
+        homeAddress: teacherData?.homeAddress || undefined,
+        phone: teacherData?.phone || undefined,
+      });
+    }
+  }, [teacherData]);
   const {
     register,
     handleSubmit,
     reset,
     control,
     formState: { errors, dirtyFields, isSubmitting },
-  } = useForm<FormShape>({ resolver: zodResolver(studentsSchema) });
+  } = useForm<FormShape>({
+    resolver: zodResolver(teacherSchema),
+    defaultValues: {},
+  });
 
   const onSubmit = async (data: FormShape) => {
     try {
-      await delay(10000);
-      const req = await axiosInstance.post<FormShape>("/api/students", data);
-      const name = req.data;
-      toast.success(
-        `${name.firstName} ${name.lastName} is added successfully`,
-        {
-          style: { textAlign: "center", color: "var(--dark-brand-1)" },
-        }
+      if (!id) return;
+
+      // Check if there are any changes
+      if (Object.keys(dirtyFields).length === 0) {
+        toast("No changes detected", { style: { textAlign: "center" } });
+        return;
+      }
+
+      const req = await axiosInstance.patch<FormShape>(
+        "/api/teachers/" + id,
+        data
       );
-      navigate(-1);
-      reset();
-    } catch (error: any) {
-      toast.error(error.response.data, {
-        style: {
-          textAlign: "center",
-        },
+      const name = req.data;
+      toast.success(`${name.firstName} ${name.lastName} updated successfully`, {
+        style: { textAlign: "center", color: "var(--dark-brand-1)" },
       });
-      // navigate(-1);
-      console.log(error.response.data);
+      navigate(-1);
+    } catch (error: any) {
+      toast.error(error?.response?.data || "Something went wrong", {
+        style: { textAlign: "center" },
+      });
+      console.log(error?.response?.data || error);
     }
   };
+
   // Create a new Student
   return (
     <Form
       onSubmit={handleSubmit(onSubmit)}
-      HeadingLabel="Create a new Student"
+      HeadingLabel="Update a Student"
       isSubmitting={isSubmitting}
+      isUpdating
     >
       <div>
         <label htmlFor="firstName">First Name</label>
@@ -79,19 +119,6 @@ function CreateStudent() {
         />
       </div>
       <div>
-        <label htmlFor="dob">Birth-date</label>
-        <Input
-          isWithZod
-          dirtyFields={dirtyFields}
-          errors={errors}
-          id="dob"
-          register={register}
-          registerValue="dob"
-          type="date"
-          color="var(--dark-brand-3)"
-        />
-      </div>
-      <div>
         <label htmlFor="address">Address</label>
         <Input
           isWithZod
@@ -103,26 +130,6 @@ function CreateStudent() {
           placeholder="Share-now, Kabul"
         />
       </div>
-      <div>
-        <label htmlFor="gender">Gender</label>
-        <Controller
-          name="gender"
-          control={control}
-          render={({ field }) => (
-            <DropDownStructure
-              options={gender}
-              labelKey="label"
-              valueKey="value"
-              margin=".5rem 0"
-              widthBtn="15rem"
-              widthDropBtn="90%"
-              heightForButton="2.7rem"
-              field={field}
-            />
-          )}
-        />
-      </div>
-
       <div>
         <label htmlFor="phone">Phone</label>
         <Input
@@ -155,15 +162,15 @@ function CreateStudent() {
         />
       </div>
       <div>
-        <label htmlFor="classId">Class</label>
+        <label htmlFor="degree">Degree</label>
         <Controller
-          name="classId"
+          name="degree"
           control={control}
           render={({ field }) => (
             <DropDownStructure
-              options={classes?.classes || []}
-              labelKey="grade"
-              valueKey="id"
+              options={degree || []}
+              labelKey="degree"
+              valueKey="value"
               margin=".5rem 0"
               widthBtn="15rem"
               widthDropBtn="90%"
@@ -177,4 +184,4 @@ function CreateStudent() {
   );
 }
 
-export default CreateStudent;
+export default UpdateTeacher;
