@@ -17,6 +17,7 @@
   width: max-content;
   /* height: 2.8rem; */
   cursor: pointer;
+  overflow: hidden;
   transition: all 0.13s linear;
 }
 .btn:active {

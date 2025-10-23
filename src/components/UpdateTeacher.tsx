@@ -92,7 +92,7 @@ function UpdateTeacher() {
   return (
     <Form
       onSubmit={handleSubmit(onSubmit)}
-      HeadingLabel="Update a Student"
+      HeadingLabel="Update a Teacher"
       isSubmitting={isSubmitting}
       isUpdating
     >

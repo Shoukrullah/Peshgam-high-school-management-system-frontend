@@ -165,8 +165,8 @@ function Table<T extends TableData>({
               return (
                 <tr key={branch.id}>
                   <td>{branch.name}</td>
-                  <td>{branch.address}</td>
                   <td>{branch.city}</td>
+                  <td>{branch.address}</td>
                   <td>
                     <TableEditButtons route="branches" id={branch.id} />
                   </td>

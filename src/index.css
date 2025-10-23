@@ -94,6 +94,7 @@ a {
 }
 svg {
   display: block;
+  outline: none;
 }
 .main {
   display: grid;
@@ -117,3 +118,12 @@ svg {
 .justifyEnd {
   justify-content: flex-end;
 }
+
+.showComponentContainer {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 2rem;
+    white-space: nowrap;
+}
+

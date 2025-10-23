@@ -7,7 +7,7 @@ interface StudentNewShape {
   totalPages: number;
 }
 
-const useStudents = (page: number) => {
+const useStudents = (page?: number) => {
   const fetchStudents = async () => {
     const req = await axiosInstance.get<StudentNewShape>("/api/students?page="+page);
     return req.data;

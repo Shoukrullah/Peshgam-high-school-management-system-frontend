@@ -4,7 +4,7 @@ import type { branches } from "../types/branches";
 
 interface BranchData {
   branches: branches[],
-  totalPages: number
+  totalPages: number | undefined
 }
 
 const useBranches = (page?: number) => {
@@ -20,7 +20,7 @@ const useBranches = (page?: number) => {
   return useQuery({
     queryKey: ["getBranches",page],
     queryFn: fetchBranches,
-    staleTime: 1000 * 60 * 3, // 3 minutes
+    staleTime: 1000  , // 1 sec
     placeholderData: keepPreviousData,
   });
 };

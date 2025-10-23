@@ -48,7 +48,7 @@ function Classes() {
       )}
       {getQuery("edit")?.includes("classes-update") && (
         <GlobalModalWindow>
-          <UpdateClass />
+          <UpdateClass  />
         </GlobalModalWindow>
       )}
     </>

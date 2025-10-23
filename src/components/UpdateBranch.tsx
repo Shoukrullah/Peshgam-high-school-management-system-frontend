@@ -14,47 +14,50 @@ import extractNumbers from "../utils/extractNumber";
 import grades from "../utils/grade";
 import Form from "./Form";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
-type FormShape = z.infer<typeof classSchema>;
+import SuggestionsInput from "./SuggestionsInput";
+import Input from "./Input";
+import branchesSchema from "../types/schemas/branchesSchema";
+import type { branches } from "../types/branches";
+import afghanistanProvinces from "../utils/afghanistanProvinces";
+type FormShape = z.infer<typeof branchesSchema>;
 
-function UpdateClass() {
-  const { data: branches } = useBranches();
-  const { data: teachers } = useTeacher();
-
+function UpdateBranch() {
   const { getQuery } = useAddQuery();
   const navigate = useNavigate();
-  const [classesData, setClassesData] = useState<classes | null>(null);
+  const [branchesData, setBranchesData] = useState<branches | null>(null);
   const getId = () => {
     const editQuery = getQuery("edit");
-    if (!editQuery?.includes("classes-update")) return;
+    if (!editQuery?.includes("branches-update")) return;
     const id = extractNumbers(editQuery);
     return parseInt(id);
   };
   const id = getId();
 
   useEffect(() => {
-    const fetchUniqueClass = async () => {
-      const req = await axiosInstance.get("/api/classes/" + id);
-      setClassesData(req.data);
+    const fetchUniqueBranch = async () => {
+      const req = await axiosInstance.get("/api/branches/" + id);
+      setBranchesData(req.data);
     };
-    fetchUniqueClass();
+    fetchUniqueBranch();
   }, [id]);
   //   console.log(teacherData)
   useEffect(() => {
-    if (classesData) {
+    if (branchesData) {
       reset({
-        grade: classesData?.grade,
-        branchId: classesData?.branchId,
-        teacherId: classesData.teacherId!,
+        city: branchesData.city,
+        address: branchesData.address,
+        name: branchesData.name,
       });
     }
-  }, [classesData]);
+  }, [branchesData]);
   const {
     handleSubmit,
     reset,
-    control,
-    formState: {  dirtyFields, isSubmitting },
+    register,
+    setValue,
+    formState: { dirtyFields, isSubmitting,errors },
   } = useForm<FormShape>({
-    resolver: zodResolver(classSchema),
+    resolver: zodResolver(branchesSchema),
     defaultValues: {},
   });
 
@@ -69,7 +72,7 @@ function UpdateClass() {
       }
 
       const req = await axiosInstance.patch<FormShape>(
-        "/api/classes/" + id,
+        "/api/branches/" + id,
         data
       );
       const name = req.data;
@@ -94,64 +97,43 @@ function UpdateClass() {
       isUpdating
     >
       <div>
-        <label htmlFor="grade">Grade</label>
-        <Controller
-          name="grade"
-          control={control}
-          render={({ field }) => (
-            <DropDownStructure
-              options={grades || []}
-              labelKey="label"
-              valueKey="value"
-              margin=".5rem 0"
-              widthBtn="15rem"
-              widthDropBtn="90%"
-              heightForButton="2.7rem"
-              field={field}
-            />
-          )}
+        <label htmlFor="name">Branch Name</label>
+        <Input
+          isWithZod
+          dirtyFields={dirtyFields}
+          errors={errors}
+          id="name"
+          register={register}
+          registerValue="name"
         />
       </div>
       <div>
-        <label htmlFor="branchId">Branch</label>
-        <Controller
-          name="branchId"
-          control={control}
-          render={({ field }) => (
-            <DropDownStructure
-              options={branches?.branches || []}
-              labelKey="name"
-              valueKey="id"
-              margin=".5rem 0"
-              widthBtn="15rem"
-              widthDropBtn="90%"
-              heightForButton="2.7rem"
-              field={field}
-            />
-          )}
+        <label htmlFor="address">Address</label>
+        <Input
+          isWithZod
+          dirtyFields={dirtyFields}
+          errors={errors}
+          id="address"
+          register={register}
+          registerValue="address"
+          placeholder="Share-now, Kabul"
         />
       </div>
       <div>
-        <label htmlFor="teacher">Instructor</label>
-        <Controller
-          name="teacherId"
-          control={control}
-          render={({ field }) => (
-            <DropDownStructure
-              options={teachers?.teachers || []}
-              labelKey="firstName"
-              valueKey="id"
-              margin=".5rem 0"
-              widthBtn="15rem"
-              widthDropBtn="90%"
-              heightForButton="2.7rem"
-              field={field}
-            />
-          )}
+        <label htmlFor="city">City</label>
+        <SuggestionsInput
+          isWithZod
+          register={register}
+          registerValue="city"
+          errors={errors}
+          dirtyFields={dirtyFields}
+          setValue={setValue}
+          placeholder="Kabul"
+          suggestions={afghanistanProvinces}
         />
       </div>
     </Form>
   );
 }
 
-export default UpdateClass;
+export default UpdateBranch;

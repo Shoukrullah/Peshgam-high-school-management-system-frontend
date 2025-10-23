@@ -10,12 +10,13 @@ import Form from "./Form";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
 import useTeacher from "../hooks/useTeachers";
 import grades from "../utils/grade";
+import useBranches from "../hooks/useBranches";
 type FormShape = z.infer<typeof classSchema>;
 
 function CreateClass() {
   const { data: classes } = useClasses();
   const { data: teachers } = useTeacher();
-  const branches = classes?.classes.map((branch) => branch.branch);
+  const {data: branches} = useBranches()
   const navigate = useNavigate();
   const {
     register,
@@ -77,7 +78,7 @@ function CreateClass() {
           control={control}
           render={({ field }) => (
             <DropDownStructure
-              options={branches || []}
+              options={branches?.branches || []}
               labelKey="name"
               valueKey="id"
               margin=".5rem 0"
