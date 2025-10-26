@@ -20,7 +20,6 @@ const useBranches = (page?: number) => {
   return useQuery({
     queryKey: ["getBranches",page],
     queryFn: fetchBranches,
-    staleTime: 1000  , // 1 sec
     placeholderData: keepPreviousData,
   });
 };

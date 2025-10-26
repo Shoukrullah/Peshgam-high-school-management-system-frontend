@@ -2,17 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../services/axios-instance";
 import type { attendance } from "../types/attendance";
 
-const useAttendance = () => {
+const useAttendance = (id?: number, fetchAll?: boolean) => {
   const fetchAttendance = async () => {
-    const req = await axiosInstance.get<attendance[]>("/api/attendances");
-    return req.data;
+    const { data } = await axiosInstance.get<attendance[]>(
+      `/api/attendances${id ? "/" + id : ""}`
+    );
+    return data;
   };
 
-  return useQuery({
-    queryKey: ["attendances"],
+  const query = useQuery({
+    queryKey: ["attendances", id],
     queryFn: fetchAttendance,
-    staleTime: 1000, // 1 sec
+    enabled: Boolean(id)
   });
+
+  return query;
 };
 
-export default useAttendance;
+export default useAttendance

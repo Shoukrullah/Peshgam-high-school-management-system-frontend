@@ -162,7 +162,7 @@ function CreateStudent() {
           render={({ field }) => (
             <DropDownStructure
               options={classes?.classes || []}
-              labelKey="grade"
+              labelKey="name"
               valueKey="id"
               margin=".5rem 0"
               widthBtn="15rem"

@@ -18,6 +18,7 @@ export type branches = ({
         id: number;
         createdAt: Date;
         updatedAt: Date | null;
+        name: string;
         branchId: number;
         grade: "PESHGAM_1" | "PESHGAM_2" | "PESHGAM_3" | "PESHGAM_4";
         teacherId: number | null;

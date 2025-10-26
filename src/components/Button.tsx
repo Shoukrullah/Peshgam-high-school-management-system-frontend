@@ -13,8 +13,10 @@ interface Props {
   height?: string;
   disabled?: boolean;
   color?: string;
-  border?:string
-  fontSize?:string
+  border?:string;
+  fontSize?:string;
+  gap?: string,
+  boxShadow?:string;
 }
 
 function Button({
@@ -30,7 +32,10 @@ function Button({
   disabled = false,
   color,
   border,
-  fontSize
+  fontSize,
+  gap = '0.5rem',
+  boxShadow
+
 }: Props) {
   const myButtonStyle: CSSProperties = {
     width,
@@ -41,7 +46,9 @@ function Button({
     borderRadius,
     color,
     border,
-    fontSize
+    fontSize,
+    gap,
+    boxShadow
   };
   return (
     <button

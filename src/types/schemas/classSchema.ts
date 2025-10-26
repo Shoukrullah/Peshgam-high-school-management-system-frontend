@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const classSchema = z.object({
+  name: z.string().trim().min(1,'Name is required.'),
   grade: z.enum(["PESHGAM_1", "PESHGAM_2", "PESHGAM_3", "PESHGAM_4"], {
     required_error: "Grade is required.",
   }),

@@ -9,15 +9,16 @@ interface TeacherNewShape {
 
 const useTeacher = (page?: number) => {
   const fetchStudents = async () => {
-    const req = await axiosInstance.get<TeacherNewShape>("/api/teachers?page="+page);
+    const req = await axiosInstance.get<TeacherNewShape>(
+      "/api/teachers?page=" + page
+    );
     return req.data;
   };
 
   return useQuery({
-    queryKey: ["teachers",page],
+    queryKey: ["teachers", page],
     queryFn: fetchStudents,
-    placeholderData: keepPreviousData, 
-    staleTime: 1000 * 60, // 1 min
+    placeholderData: keepPreviousData,
   });
 };
 export default useTeacher;

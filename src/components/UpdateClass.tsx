@@ -14,6 +14,7 @@ import extractNumbers from "../utils/extractNumber";
 import grades from "../utils/grade";
 import Form from "./Form";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
+import Input from "./Input";
 type FormShape = z.infer<typeof classSchema>;
 
 function UpdateClass() {
@@ -51,8 +52,9 @@ function UpdateClass() {
   const {
     handleSubmit,
     reset,
+    register,
     control,
-    formState: {  dirtyFields, isSubmitting },
+    formState: { dirtyFields, isSubmitting,errors },
   } = useForm<FormShape>({
     resolver: zodResolver(classSchema),
     defaultValues: {},
@@ -93,6 +95,18 @@ function UpdateClass() {
       isSubmitting={isSubmitting}
       isUpdating
     >
+      <div>
+        <label htmlFor="name">Class Name</label>
+        <Input
+          isWithZod
+          dirtyFields={dirtyFields}
+          errors={errors}
+          id="name"
+          register={register}
+          registerValue="name"
+          placeholder="P-1-QotaSanqi"
+        />
+      </div>
       <div>
         <label htmlFor="grade">Grade</label>
         <Controller

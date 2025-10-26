@@ -1,0 +1,21 @@
+.tableContainer {
+    margin-top: 2rem;
+    width: 100%;
+    border-collapse: collapse;
+    outline: none;
+    font-size: 1.4rem;
+    
+}
+.tableContainer th {
+    text-align: start;
+    color: var(--dark-brand-3);
+    font-weight: 100;
+    border-radius: .5rem;
+    padding: 0.5rem  .3rem 1rem 0.3rem;
+}
+.tableContainer tr,.tableContainer td {
+    padding: 1rem .5rem;
+}
+.tableContainer tbody tr:nth-child(odd) {
+    background-color: var(--attendance-color-1);
+}

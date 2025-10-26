@@ -16,7 +16,8 @@ export const teacherHeader: string[] = [
   "",
 ];
 
-export const classHeader: string[] = ["Grade", "Branch", "Teacher", ""];
+export const classHeader: string[] = ["Class Name","Grade", "Branch", "Teacher", ""];
 
 export const branchHeader: string[] = ["Branch Name","City","Address", ""];
+export const attendanceHeader: string[] = ['Student',"Status", 'Actions']
 

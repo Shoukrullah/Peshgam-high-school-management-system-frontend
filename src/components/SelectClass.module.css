@@ -1,0 +1,16 @@
+.selectClassContainer {
+    /* background-color: red; */
+    padding: 2rem;
+    border: 1px solid var(--primary-color-weak);
+    border-top-width: 3px;
+    border-radius: .5rem;
+    border-top-color: var(--primary-color);
+    /* max-width: 30rem; */
+    border-right: none;
+    border-bottom: none;
+
+}
+.selectClassContainer p {
+    font-size: 1.4rem;
+    padding-bottom: .5rem;
+}

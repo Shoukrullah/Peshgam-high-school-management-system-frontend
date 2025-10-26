@@ -11,6 +11,7 @@ import DropDownStructure from "./reactDropDown/DropDownStructure";
 import useTeacher from "../hooks/useTeachers";
 import grades from "../utils/grade";
 import useBranches from "../hooks/useBranches";
+import Input from "./Input";
 type FormShape = z.infer<typeof classSchema>;
 
 function CreateClass() {
@@ -53,6 +54,18 @@ function CreateClass() {
       isSubmitting={isSubmitting}
     >
       <div>
+              <label htmlFor="name">Class Name</label>
+              <Input
+                isWithZod
+                dirtyFields={dirtyFields}
+                errors={errors}
+                id="name"
+                register={register}
+                registerValue="name"
+                placeholder="P-1-QotaSanqi"
+              />
+            </div>
+      <div>
         <label htmlFor="grade">Grade</label>
         <Controller
           name="grade"
@@ -83,7 +96,7 @@ function CreateClass() {
               valueKey="id"
               margin=".5rem 0"
               widthBtn="15rem"
-              widthDropBtn="90%"
+              widthDropBtn="100%"
               heightForButton="2.7rem"
               field={field}
             />

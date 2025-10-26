@@ -24,6 +24,7 @@ export type classes = ({
   createdAt: Date;
   updatedAt: Date | null;
   branchId: number;
+  name: string;
   grade: "PESHGAM_1" | "PESHGAM_2" | "PESHGAM_3" | "PESHGAM_4";
   teacherId: number | null;
 });

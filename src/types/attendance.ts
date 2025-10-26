@@ -16,6 +16,7 @@ export type attendance = ({
   };
   class: {
     id: number;
+    name: string;
     createdAt: Date;
     updatedAt: Date | null;
     branchId: number;

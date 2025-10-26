@@ -18,7 +18,7 @@ export default function ChartForStudentsGender({
       dataKey="value"
       nameKey="name"
       outerRadius="75%"
-      innerRadius="60%"
+      innerRadius="62%"
       isAnimationActive={true}
     />
   );

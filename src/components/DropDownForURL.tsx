@@ -1,35 +1,36 @@
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { RxCheck } from "react-icons/rx";
-import type { ControllerRenderProps } from "react-hook-form";
-import styles from "./DropDownStructure.module.css";
-import toCamelCase from "../../utils/toCamelCase";
+import styles from "./reactDropDown/DropDownStructure.module.css";
+import { useAddQuery } from "../hooks/useAddQuery";
+import toCamelCase from "../utils/toCamelCase";
 
 interface BaseProps<T> {
   options: T[];
   labelKey: keyof T;
   valueKey: keyof T;
+  queryKey: string; // e.g. "branchId"
   heightForButton?: string;
   widthBtn?: string;
   widthDropBtn?: string;
   margin?: string;
   scrollToBeAvailable?: number;
-  field?: ControllerRenderProps<any, any>;
 }
 
-function DropDownStructure<T extends Record<string, any>>({
+function DropDownForURL<T extends Record<string, any>>({
   options,
   labelKey,
   valueKey,
+  queryKey,
   heightForButton = "2.5rem",
   widthBtn,
   widthDropBtn,
   scrollToBeAvailable = 7,
   margin,
-  field,
 }: BaseProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { setQuery, getQuery } = useAddQuery();
 
   const stylesForButton: CSSProperties = {
     height: heightForButton,
@@ -37,24 +38,21 @@ function DropDownStructure<T extends Record<string, any>>({
     margin,
   };
 
-  // 🔹 Determine selected item (form value or default first)
-  const selectedOption =
-    options.find(
-      (opt) => (valueKey ? opt[valueKey] : opt[labelKey]) === field?.value
-    ) || options[0];
+  // 🔹 Get the current value from the URL
+  const queryValue = getQuery(queryKey);
 
-  // 🔹 Automatically set first option as default if field is empty
-  useEffect(() => {
-    if (field && !field.value && options.length > 0) {
-      const firstValue = valueKey ? options[0][valueKey] : options[0][labelKey];
-      field.onChange(firstValue);
-    }
-  }, [field, options, valueKey, labelKey]);
+  // 🔹 Find selected option based on URL
+  const selectedOption = options.find(
+    (opt) => String(opt[valueKey]) === String(queryValue ?? "")
+  );
 
-  const selectedLabel = selectedOption ? String(selectedOption[labelKey]) : "";
+  const selectedLabel = selectedOption
+    ? String(selectedOption[labelKey])
+    : "Select a Class";
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
+  // 🔹 Close dropdown when clicking outside
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
       if (
@@ -68,10 +66,11 @@ function DropDownStructure<T extends Record<string, any>>({
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  // 🔹 Handle click on an item
   const handleItemClick = (option: T) => {
+    const value = String(option[valueKey]);
+    setQuery(queryKey, value); // 🟢 Update the URL
     setIsOpen(false);
-    const value = valueKey ? option[valueKey] : option[labelKey];
-    field?.onChange(value);
   };
 
   return (
@@ -92,13 +91,15 @@ function DropDownStructure<T extends Record<string, any>>({
         <ul
           style={{
             width: widthDropBtn,
-            overflowY: options.length > 7 ? "scroll" : "auto",
+            overflowY: options.length > scrollToBeAvailable ? "scroll" : "auto",
             maxHeight: "21.8rem",
           }}
         >
           {options.map((option, index) => {
             const label = String(option[labelKey]);
-            const value = valueKey ? option[valueKey] : label;
+            const value = String(option[valueKey]);
+            const isSelected = value === String(queryValue);
+
             return (
               <li
                 key={index}
@@ -108,7 +109,7 @@ function DropDownStructure<T extends Record<string, any>>({
                     options.length > scrollToBeAvailable ? ".5rem" : "",
                 }}
               >
-                {toCamelCase(label)} {field?.value === value && <RxCheck />}
+                {toCamelCase(label)} {isSelected && <RxCheck />}
               </li>
             );
           })}
@@ -118,4 +119,4 @@ function DropDownStructure<T extends Record<string, any>>({
   );
 }
 
-export default DropDownStructure;
+export default DropDownForURL;

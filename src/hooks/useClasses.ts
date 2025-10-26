@@ -20,7 +20,6 @@ const useClasses = (page?: number) => {
   return useQuery({
     queryKey: ["classes", page],
     queryFn: fetchClasses,
-    staleTime: 1000, // 1 sec
     placeholderData: keepPreviousData,
   });
 };

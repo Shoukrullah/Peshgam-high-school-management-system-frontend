@@ -10,6 +10,7 @@ export type teacherShape = ({
     classes: {
         id: number;
         createdAt: Date;
+        name: string;
         updatedAt: Date | null;
         branchId: number;
         grade: "PESHGAM_1" | "PESHGAM_2" | "PESHGAM_3" | "PESHGAM_4";
