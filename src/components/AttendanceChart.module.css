@@ -1,0 +1,21 @@
+.chartContainer {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chartTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--dark-brand-1, #333);
+  /* margin-bottom: 1rem; */
+}
+
+/* Optional: Define brand colors if not already in your :root */
+:root {
+  --brand-purple: #0088fe; /* Present color */
+  --brand-yellow: #ff8042; /* Absent color */
+}

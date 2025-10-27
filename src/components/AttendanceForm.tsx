@@ -62,7 +62,6 @@ function AttendanceForm({ studentData }: Props) {
   };
 
   const handleSave = () => {
-    // check if any student is still unmarked
     const anyUnmarked = students.some((stu) => !stu.attendanceStatus);
 
     if (anyUnmarked) {

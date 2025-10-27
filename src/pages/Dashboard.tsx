@@ -1,5 +1,6 @@
-import ChartForStudentsGender from "../components/Chart";
-import PieChartInGrid from "../components/Chart";
+import ChartForStudentsGender from "../components/ChartForStudentsGender";
+import PieChartInGrid from "../components/ChartForStudentsGender";
+import DashboardCharts from "../components/DashboardCharts";
 import Heading from "../components/Heading";
 import ShowDashBoardComponent from "../components/ShowDashBoardComponent";
 import useBranches from "../hooks/useBranches";
@@ -33,14 +34,14 @@ function Dashboard() {
 
   return (
     <div>
-      <Heading fontSize="2.5rem">Dashboard</Heading>
+      <Heading margin="1rem 0 0 0" fontSize="2.5rem">Dashboard</Heading>
       <ShowDashBoardComponent
         branches={data?.branches.length}
         classes={classes?.classes.length}
         students={students?.students.length}
         teachers={teachers?.teachers.length}
       />
-      <ChartForStudentsGender femaleCount={totalFemale} maleCount={totalMale} />
+      <DashboardCharts femaleCount={totalFemale} maleCount={totalMale} />
     </div>
   );
 }

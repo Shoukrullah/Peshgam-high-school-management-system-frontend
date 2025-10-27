@@ -1,0 +1,52 @@
+.genderChartContainer > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.genderChartContainer > div:first-child p:first-child {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+.afterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+  padding: 0 4rem;
+  font-size: 1.3rem;
+}
+.afterContainer > div {
+  position: relative;
+  text-align: center;
+}
+.afterContainer > div p:nth-child(1) {
+  font-weight: 900;
+}
+
+.afterContainer > div p:nth-child(2) {
+  color: var(--dark-brand-3);
+}
+
+.afterContainer > div:first-child::before {
+  position: absolute;
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100%;
+  background-color: #0088fe;
+}
+.afterContainer > div:last-child::before {
+  position: absolute;
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100%;
+  background-color: #ff8042;
+}

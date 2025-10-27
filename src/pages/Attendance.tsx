@@ -14,7 +14,7 @@ function Attendance() {
   // if(!studentsData?.length) return;
   return (
     <div>
-      <Heading fontSize="2.5rem">Attendances</Heading>
+      <Heading margin="1rem 0 0 0" fontSize="2.5rem">Attendances</Heading>
       <SelectClass OnUpdateAttendance={updateAttendance} />
       <AttendanceDescription data={studentsData} />
     </div>

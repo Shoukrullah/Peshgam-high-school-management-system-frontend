@@ -1,0 +1,20 @@
+.chartsContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+}
+.chartsContainer > div {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.125);
+  margin-top: 2rem;
+  padding: 1rem .6rem;
+  /* height: 100%; */
+}
+.chartsContainer > div:first-child {
+    /* background-color: rgba(242, 0, 255, 0.123); */
+}
+.chartsContainer > div:nth-child(2) {
+    background-color: rgba(126, 63, 168, 0.132);
+    height: auto !important;
+}

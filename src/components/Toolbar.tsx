@@ -27,7 +27,7 @@ function Toolbar({ route, add }: Props) {
   const { setQuery } = useAddQuery();
   return (
     <div className={styles.ToolbarContainer}>
-      <Heading fontSize="2.5rem">All {route}</Heading>
+      <Heading margin="1rem 0 0 0" fontSize="2.5rem">All {route}</Heading>
       <div className={styles.rightSideTool}>
         <div className={styles.searchBarContainer}>
           <label htmlFor="search">
