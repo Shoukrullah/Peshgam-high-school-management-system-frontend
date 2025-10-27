@@ -1,25 +1,12 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import axiosInstance from "../services/axios-instance";
+import axiosInstance, { APIClient } from "../services/axios-instance";
 import type { branches } from "../types/branches";
-
-interface BranchData {
-  branches: branches[],
-  totalPages: number | undefined
-}
+import { ApiClientBranches } from "../services/allServices";
 
 const useBranches = (page?: number) => {
-  const fetchBranches = async () => {
-    const req = await axiosInstance.get<BranchData>("/api/branches", {
-      params: {
-        page,
-      },
-    });
-    return req.data;
-  };
-
   return useQuery({
-    queryKey: ["getBranches",page],
-    queryFn: fetchBranches,
+    queryKey: ["getBranches", page],
+    queryFn: () => ApiClientBranches.getAll({ page }),
     placeholderData: keepPreviousData,
   });
 };

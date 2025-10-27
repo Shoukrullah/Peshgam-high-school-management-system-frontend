@@ -7,9 +7,10 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+
   return (
     <>
-        {/* <Aside /> */}
+        <Aside />
         <RouterProvider router={router} />
 
     </>

@@ -14,6 +14,7 @@ import styles from "./AttendanceDescription.module.css";
 import AttendanceTable from "./AttendanceTable";
 import Button from "./Button";
 import Input from "./Input";
+import { useNavigate } from "react-router-dom";
 
 type FormShape = z.infer<typeof attendanceSchema>;
 export type AttendanceStatus = "PRESENT" | "ABSENT" | "PROBLEM";
@@ -28,6 +29,7 @@ interface Props {
 
 function AttendanceForm({ studentData }: Props) {
   const [students, setStudents] = useState<StudentWithStatus[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Whenever studentData (from parent) changes, we create a fresh copy in local state.
@@ -93,6 +95,7 @@ function AttendanceForm({ studentData }: Props) {
         toast.success("Attendance of the class is successfully saved.", {
           style: { textAlign: "center" },
         });
+        navigate("/attendances");
       } catch (error) {
         const err = error as AxiosError;
         if (err.response?.status === 400) {

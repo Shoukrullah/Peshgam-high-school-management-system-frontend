@@ -29,7 +29,7 @@ interface TeacherShape extends CommonProps {
   phone?: string | null;
   degree?: string | null;
   branch: { name: string };
-  homeAddress?: string | null
+  homeAddress?: string | null;
 }
 
 interface StudentShape extends CommonProps {
@@ -65,9 +65,11 @@ function Table<T extends TableData>({
   return (
     <table className={styles.tableContainer}>
       <thead>
+        <tr>
           {headerData.map((head, i) => (
             <Th key={i}>{head}</Th>
           ))}
+        </tr>
       </thead>
 
       <tbody>
