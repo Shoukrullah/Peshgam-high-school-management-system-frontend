@@ -1,3 +1,5 @@
+import Error from "../components/Error";
+import Loading from "../components/loading";
 import Pagination from "../components/pagination/Pagination";
 import Table from "../components/Table";
 import TeachersMutations from "../components/TeachersMutations";
@@ -11,6 +13,8 @@ function Teacher() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
   const { data, isLoading, error } = useTeacher(currentPage);
+  if (isLoading) return <Loading />;
+  if (error) return <Error error={error.message} />;
   const query = getQuery("sort") as SortOrder;
   const sortedData = sortByQuery(data?.teachers, "firstName", query);
   return (

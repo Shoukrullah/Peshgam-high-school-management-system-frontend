@@ -6,7 +6,9 @@ function Layout() {
     <>
       <main className="main max-width">
         <Aside />
-        <Outlet />
+        <section className="relative">
+          <Outlet />
+        </section>
       </main>
       <Toaster />
     </>

@@ -1,4 +1,6 @@
+import delay from "delay";
 import BranchesMutations from "../components/BranchesMutations";
+import Loading from "../components/loading";
 import Pagination from "../components/pagination/Pagination";
 import Table from "../components/Table";
 import Toolbar from "../components/Toolbar";
@@ -6,11 +8,15 @@ import { useAddQuery } from "../hooks/useAddQuery";
 import useBranches from "../hooks/useBranches";
 import { branchHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
+import Error from "../components/Error";
 
 function Branch() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1");
   const { data, isLoading, error } = useBranches(currentPage);
+
+  if (isLoading) return <Loading />;
+  if (error) return <Error error={error.message} />;
 
   const query = getQuery("sort") as SortOrder;
   const sortedData = sortByQuery(data?.branches, "name", query);

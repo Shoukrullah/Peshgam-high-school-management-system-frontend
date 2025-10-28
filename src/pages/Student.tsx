@@ -1,3 +1,4 @@
+import Loading from "../components/loading";
 import Pagination from "../components/pagination/Pagination";
 import StudentsMutations from "../components/StudentsMutations";
 import Table from "../components/Table";
@@ -6,12 +7,15 @@ import { useAddQuery } from "../hooks/useAddQuery";
 import useStudents from "../hooks/useStudents";
 import { studentHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
+import Error from "../components/Error";
 
 function Student() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
 
   const { data, isLoading, error } = useStudents(currentPage);
+  if (isLoading) return <Loading />;
+  if (error) return <Error error={error.message} />;
 
   const query = getQuery("sort") as SortOrder;
   const sortedData = sortByQuery(data?.students, "firstName", query);

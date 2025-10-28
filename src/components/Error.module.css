@@ -1,0 +1,37 @@
+.error {
+  content: "";
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  text-align: center;
+  /* background-color: var(--dark-brand-9); */
+  transform: translate(-50%, -50%);
+  
+}
+.error h2 {
+  color: var(--dark-brand-1);
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.refresh {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  font-size: small;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  background-color: var(--primary-color);
+  padding: 0.3rem 0.5rem;
+  color: var(--light-brand-1);
+}
+.refresh:hover {
+  opacity: 0.9;
+}
+.refresh:active {
+  transform: translateY(-1px);
+}

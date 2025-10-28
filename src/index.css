@@ -104,6 +104,9 @@ svg {
   gap: 2rem;
   position: relative;
 }
+.relative {
+  position: relative;
+}
 /* ------------------------------------------*/
 /* Utility Classes
 /* ------------------------------------------*/
@@ -185,4 +188,17 @@ svg {
 .btn:active {
   opacity: var(--dark-brand-1);
   transform: translateY(-1px);
+}
+
+/* ------------------------------------------*/
+/* Loading styles
+/* ------------------------------------------*/
+.loadingContainer {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  bottom: 50%;
+  background-color: var(--dark-brand-9);
+  transform: translate(-50%, -50%);
 }

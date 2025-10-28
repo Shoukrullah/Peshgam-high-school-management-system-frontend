@@ -1,24 +1,28 @@
 import DashboardCharts from "../components/DashboardCharts";
 import Heading from "../components/Heading";
+import Loading from "../components/loading";
 import ShowDashBoardComponent from "../components/ShowDashBoardComponent";
 import useBranches from "../hooks/useBranches";
 import useClasses from "../hooks/useClasses";
 import useStudents from "../hooks/useStudents";
 import useTeacher from "../hooks/useTeachers";
-
 function Dashboard() {
-  const { data, isLoading, error } = useBranches();
-  const { data: classes } = useClasses();
-  const { data: teachers } = useTeacher();
-  const { data: students } = useStudents();
+  const { data, isLoading } = useBranches();
+  const { data: classes, isLoading: loadingClasses } = useClasses();
+  const { data: teachers, isLoading: loadingTeachers } = useTeacher();
+  const { data: students, isLoading: loadingStudents } = useStudents();
+
   const totalMale = students?.students.filter(
     (stu) => stu.gender === "MALE"
   ).length;
 
-  const totalFemale = students?.students.map((stu) => stu.gender === "FEMALE").length;
+  const totalFemale = students?.students.map(
+    (stu) => stu.gender === "FEMALE"
+  ).length;
 
-  if (isLoading) return <p>loading...</p>;
-  if (error) return <p>{error.message}</p>;
+  if (isLoading || loadingClasses || loadingTeachers || loadingStudents)
+    return <Loading />;
+
   return (
     <div>
       <Heading margin="1rem 0 0 0" fontSize="2.5rem">
