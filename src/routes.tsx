@@ -6,12 +6,13 @@ import Student from "./pages/Student";
 import Teacher from "./pages/Teacher";
 import Attendance from "./pages/Attendance";
 import Branch from "./pages/Branch";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
-        errorElement: 'Error',
+        errorElement: <ErrorPage />,
         children: [
             {index: true, element: <Dashboard />},
             {path: 'classes',element: <Classes />},

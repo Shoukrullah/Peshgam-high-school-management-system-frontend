@@ -25,6 +25,8 @@ const useStudents = (
     queryKey: [QUERY_KEYS.STUDENTS, { page, classId }],
     queryFn: () => ApiClientStudents.getAll({ page, classId }),
     enabled: isEnabled,
+    staleTime: 1000  // 1 seconds
+
   });
 };
 

@@ -9,6 +9,8 @@ const useBranches = (page?: number) => {
     queryKey: [QUERY_KEYS.BRANCH, page],
     queryFn: () => ApiClientBranches.getAll({ page }),
     placeholderData: keepPreviousData,
+    staleTime: 1000  // 1 seconds
+
   });
 };
 

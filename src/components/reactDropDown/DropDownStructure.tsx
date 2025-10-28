@@ -15,9 +15,10 @@ interface BaseProps<T> {
   margin?: string;
   scrollToBeAvailable?: number;
   field?: ControllerRenderProps<any, any>;
+  disabled?:boolean
 }
 
-function DropDownStructure<T extends Record<string, any>>({
+function DropDownStructure<T>({
   options,
   labelKey,
   valueKey,
@@ -27,6 +28,7 @@ function DropDownStructure<T extends Record<string, any>>({
   scrollToBeAvailable = 7,
   margin,
   field,
+  disabled = false
 }: BaseProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -77,6 +79,7 @@ function DropDownStructure<T extends Record<string, any>>({
   return (
     <div className={styles.container} ref={dropdownRef}>
       <button
+      disabled = {disabled}
         style={stylesForButton}
         className={`${styles.btn} ${
           isOpen ? `${styles.btnActive} ${styles.activeOutline}` : ""

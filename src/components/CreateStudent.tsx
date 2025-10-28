@@ -17,33 +17,44 @@ type FormShape = z.infer<typeof studentsSchema>;
 
 function CreateStudent() {
   const { data: branches } = useBranches();
-  const { data: classes } = useClasses();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     reset,
     control,
+    watch,
     formState: { errors, dirtyFields, isSubmitting },
   } = useForm<FormShape>({ resolver: zodResolver(studentsSchema) });
+  const seeBranch = watch("branchId");
+  const branchesClasses = seeBranch
+    ? branches?.branches.flatMap((branch) => branch.classes)
+    : [];
+  const classes = branchesClasses?.length
+    ? branchesClasses?.filter((value) => value.branchId === seeBranch)
+    : undefined;
+
   const { mutate, isPending } = useMutate<studentShape, FormShape>({
     endpoint: "/api/students",
     method: "post",
     invalidateKeys: [QUERY_KEYS.STUDENTS],
 
     // ✅ Optimistic UI update
-    optimisticUpdate: (oldData, newItem) => [
-      ...oldData,
-      {
-        id: Date.now(),
-        firstName: newItem.firstName,
-        lastName: newItem.lastName,
-        phone: newItem.phone,
-        branchId: newItem.branchId,
-        classId: newItem.classId,
-        address: newItem.address
-      } as studentShape,
-    ],
+    optimisticUpdate: (oldData, newItem) => {
+      const prev = Array.isArray(oldData) ? oldData : [];
+      return [
+        ...prev,
+        {
+          id: Date.now(),
+          firstName: newItem.firstName,
+          lastName: newItem.lastName,
+          phone: newItem.phone,
+          branchId: newItem.branchId,
+          classId: newItem.classId,
+          address: newItem.address,
+        } as studentShape,
+      ];
+    },
 
     onSuccess: (data) => {
       toast.success(
@@ -180,11 +191,12 @@ function CreateStudent() {
           control={control}
           render={({ field }) => (
             <DropDownStructure
-              options={classes?.classes || []}
+              options={classes || []}
               labelKey="name"
               valueKey="id"
               margin=".5rem 0"
               widthBtn="15rem"
+              disabled={classes?.length ? false : true}
               widthDropBtn="90%"
               heightForButton="2.7rem"
               field={field}

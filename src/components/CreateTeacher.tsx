@@ -32,18 +32,21 @@ function CreateTeacher() {
     invalidateKeys: [QUERY_KEYS.TEACHERS],
 
     // ✅ Optimistic UI update
-    optimisticUpdate: (oldData, newItem) => [
-      ...oldData,
-      {
-        id: Date.now(),
-        branchId: newItem.branchId,
-        degree: newItem.degree,
-        firstName: newItem.firstName,
-        homeAddress: newItem.homeAddress,
-        lastName: newItem.lastName,
-        phone: newItem.phone,
-      } as teacherShape,
-    ],
+    optimisticUpdate: (oldData, newItem) => {
+      const prev = Array.isArray(oldData) ? oldData : [];
+      return [
+        ...prev,
+        {
+          id: Date.now(),
+          branchId: newItem.branchId,
+          degree: newItem.degree,
+          firstName: newItem.firstName,
+          homeAddress: newItem.homeAddress,
+          lastName: newItem.lastName,
+          phone: newItem.phone,
+        } as teacherShape,
+      ];
+    },
 
     onSuccess: (data) => {
       toast.success(

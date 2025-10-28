@@ -33,23 +33,18 @@ function CreateBranch() {
     invalidateKeys: [QUERY_KEYS.BRANCH],
 
     // ✅ Optimistic UI update
-    optimisticUpdate: (oldData, newItem) => [
-      ...oldData,
-      {
-        // Temporary ID (used for instant UI feedback)
-        id: Math.random(),
-        name: newItem.name,
-        address: newItem.address,
-        city: newItem.city || "",
-        // Optional empty arrays to satisfy the `branches` type
-        students: [],
-        classes: [],
-        teachers: [],
-        createdAt: new Date(),
-        updatedAt: null,
-      } as branches,
-    ],
-  
+    optimisticUpdate: (oldData, newItem) => {
+      const prev = Array.isArray(oldData) ? oldData : [];
+      return [
+        ...prev,
+        {
+          id: Math.random(),
+          name: newItem.name,
+          address: newItem.address,
+          city: newItem.city || ""
+        } as branches,
+      ];
+    },
 
     onSuccess: (data) => {
       toast.success(`${data.name} added successfully!`, {

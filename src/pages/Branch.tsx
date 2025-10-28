@@ -9,7 +9,7 @@ import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
 
 function Branch() {
   const { getQuery } = useAddQuery();
-  const currentPage = parseInt(getQuery("page") || "1", 10);
+  const currentPage = parseInt(getQuery("page") || "1");
   const { data, isLoading, error } = useBranches(currentPage);
 
   const query = getQuery("sort") as SortOrder;

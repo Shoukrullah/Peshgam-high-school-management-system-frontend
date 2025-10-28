@@ -4,9 +4,10 @@ import { QUERY_KEYS } from "../services/constants";
 
 const useClasses = (page?: number) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.CLASSES, page],
+    queryKey: [QUERY_KEYS.CLASSES,],
     queryFn: () => ApiClientClasses.getAll({ page }),
     placeholderData: keepPreviousData,
+    staleTime: 1000  // 1 seconds
   });
 };
 export default useClasses;

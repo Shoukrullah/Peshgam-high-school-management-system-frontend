@@ -33,17 +33,20 @@ function CreateClass() {
     invalidateKeys: [QUERY_KEYS.CLASSES],
 
     // ✅ Optimistic UI update
-    optimisticUpdate: (oldData, newItem) => [
-      ...oldData,
-      {
-        // Temporary ID (used for instant UI feedback)
-        id: Math.random(),
-        name: newItem.name,
-        grade: newItem.grade,
-        branchId: newItem.branchId,
-        teacherId: newItem.branchId,
-      } as classes,
-    ],
+
+    optimisticUpdate: (oldData, newItem) => {
+      const prev = Array.isArray(oldData) ? oldData : [];
+      return [
+        ...prev,
+        {
+          id: Math.random(), // temporary client-side ID
+          name: newItem.name,
+          grade: newItem.grade,
+          branchId: newItem.branchId,
+          teacherId: newItem.teacherId,
+        },
+      ] as classes[];
+    },
 
     onSuccess: (data) => {
       toast.success(`${data.name} class is added successfully`, {
@@ -62,6 +65,7 @@ function CreateClass() {
   });
 
   const onSubmit = (data: FormShape) => {
+    console.log(data);
     mutate(data);
   };
 

@@ -9,6 +9,7 @@ const useTeacher = (page?: number) => {
     queryKey: [QUERY_KEYS.TEACHERS, page],
     queryFn: () => ApiClientTeachers.getAll({ page }),
     placeholderData: keepPreviousData,
+    staleTime: 1000, // 1 seconds
   });
 };
 export default useTeacher;
