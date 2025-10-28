@@ -15,6 +15,7 @@ const studentsSchema = z.object({
   classId: z.number().min(1, "ClassId is required."),
   gender: z.enum(["MALE", "FEMALE"]).optional(),
   status: z.enum(["ACTIVE", "GRADUATED", "TRANSFERRED", "INACTIVE"]).optional(),
+  address: z.string().min(1,'Address must have at least 1 character.').optional()
 });
 
 export default studentsSchema;

@@ -1,3 +1,7 @@
+.noStudents{
+  text-align: center;
+  margin-top: 12rem;
+}
 .chartsContainer {
   display: grid;
   grid-template-columns: 1fr 2fr;

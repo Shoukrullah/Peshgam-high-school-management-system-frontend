@@ -15,6 +15,8 @@ import grades from "../utils/grade";
 import Form from "./Form";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
 import Input from "./Input";
+import { useMutate } from "../hooks/useMutate";
+import { QUERY_KEYS } from "../services/constants";
 type FormShape = z.infer<typeof classSchema>;
 
 function UpdateClass() {
@@ -43,6 +45,7 @@ function UpdateClass() {
   useEffect(() => {
     if (classesData) {
       reset({
+        name: classesData?.name,
         grade: classesData?.grade,
         branchId: classesData?.branchId,
         teacherId: classesData.teacherId!,
@@ -54,38 +57,73 @@ function UpdateClass() {
     reset,
     register,
     control,
-    formState: { dirtyFields, isSubmitting,errors },
+    formState: { dirtyFields, isSubmitting, errors },
   } = useForm<FormShape>({
     resolver: zodResolver(classSchema),
     defaultValues: {},
   });
-
-  const onSubmit = async (data: FormShape) => {
-    try {
-      if (!id) return;
-
-      // Check if there are any changes
-      if (Object.keys(dirtyFields).length === 0) {
-        toast("No changes detected", { style: { textAlign: "center" } });
-        return;
-      }
-
-      const req = await axiosInstance.patch<FormShape>(
-        "/api/classes/" + id,
-        data
-      );
-      const name = req.data;
-      toast.success(`updated successfully`, {
+  const { mutate, isPending } = useMutate<FormShape, FormShape>({
+    endpoint: `/api/classes/${id}`,
+    method: "patch",
+    invalidateKeys: [QUERY_KEYS.CLASSES],
+    onSuccess: () => {
+      toast.success("Class updated successfully!", {
         style: { textAlign: "center", color: "var(--dark-brand-1)" },
       });
       navigate(-1);
-    } catch (error: any) {
+    },
+    onError: (error: any) => {
       toast.error(error?.response?.data || "Something went wrong", {
         style: { textAlign: "center" },
       });
-      console.log(error?.response?.data || error);
+      console.error(error);
+    },
+    // (Optional) optimistic update
+    optimisticUpdate: (oldData, newItem) => {
+      return oldData.map((classes: any) =>
+        classes.id === id ? { ...classes, ...newItem } : classes
+      );
+    },
+  });
+
+  // ✅ Handle form submission
+  const onSubmit = (data: FormShape) => {
+    if (!id) return;
+
+    if (Object.keys(dirtyFields).length === 0) {
+      toast("No changes detected", { style: { textAlign: "center" } });
+      return;
     }
+
+    mutate(data);
   };
+
+  // const onSubmit = async (data: FormShape) => {
+  //   try {
+  //     if (!id) return;
+
+  //     // Check if there are any changes
+  //     if (Object.keys(dirtyFields).length === 0) {
+  //       toast("No changes detected", { style: { textAlign: "center" } });
+  //       return;
+  //     }
+
+  //     const req = await axiosInstance.patch<FormShape>(
+  //       "/api/classes/" + id,
+  //       data
+  //     );
+  //     const name = req.data;
+  //     toast.success(`updated successfully`, {
+  //       style: { textAlign: "center", color: "var(--dark-brand-1)" },
+  //     });
+  //     navigate(-1);
+  //   } catch (error: any) {
+  //     toast.error(error?.response?.data || "Something went wrong", {
+  //       style: { textAlign: "center" },
+  //     });
+  //     console.log(error?.response?.data || error);
+  //   }
+  // };
 
   // Create a new Student
   return (

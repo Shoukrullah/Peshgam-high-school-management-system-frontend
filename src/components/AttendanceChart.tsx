@@ -24,15 +24,18 @@ function AttendanceChart() {
       <p className={styles.chartTitle}>Attendance</p>
       <ResponsiveContainer>
         <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#0e0a0a0f" />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            vertical={false}
+            stroke="#0e0a0a0f"
+          />
           <XAxis dataKey="day" tick={{ fill: "var(--dark-brand-4)" }} />
           <YAxis tick={{ fill: "var(--dark-brand-4)" }} />
-          <Tooltip cursor={{ fill: "rgba(0, 0, 0, 0.04)" }}  />
           <Legend
             verticalAlign="top"
             align="right"
             iconType="circle"
-            wrapperStyle={{ top:-1 }}
+            wrapperStyle={{ top: -1 }}
           />
           <Bar
             dataKey="present"

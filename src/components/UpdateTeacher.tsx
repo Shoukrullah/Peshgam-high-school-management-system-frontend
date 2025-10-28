@@ -14,11 +14,13 @@ import extractNumbers from "../utils/extractNumber";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
+import { useMutate } from "../hooks/useMutate";
+import { QUERY_KEYS } from "../services/constants";
 type FormShape = z.infer<typeof teacherSchema>;
 
 function UpdateTeacher() {
   const { data: branches } = useBranches();
-  console.log(branches)
+  console.log(branches);
   const { getQuery } = useAddQuery();
   const navigate = useNavigate();
   const [teacherData, setTeacherData] = useState<teacherShape | null>(null);
@@ -37,7 +39,7 @@ function UpdateTeacher() {
     };
     fetchUniqueTeacher();
   }, [id]);
-  console.log(teacherData)
+  console.log(teacherData);
   useEffect(() => {
     if (teacherData) {
       reset({
@@ -60,32 +62,40 @@ function UpdateTeacher() {
     resolver: zodResolver(teacherSchema),
     defaultValues: {},
   });
-
-  const onSubmit = async (data: FormShape) => {
-    try {
-      if (!id) return;
-
-      // Check if there are any changes
-      if (Object.keys(dirtyFields).length === 0) {
-        toast("No changes detected", { style: { textAlign: "center" } });
-        return;
-      }
-
-      const req = await axiosInstance.patch<FormShape>(
-        "/api/teachers/" + id,
-        data
-      );
-      const name = req.data;
-      toast.success(`${name.firstName} ${name.lastName} updated successfully`, {
+  const { mutate, isPending } = useMutate<FormShape, FormShape>({
+    endpoint: `/api/teachers/${id}`,
+    method: "patch",
+    invalidateKeys: [QUERY_KEYS.TEACHERS],
+    onSuccess: (data) => {
+      toast.success(`${data.firstName} ${data.lastName} updated successfully`, {
         style: { textAlign: "center", color: "var(--dark-brand-1)" },
       });
       navigate(-1);
-    } catch (error: any) {
+    },
+    onError: (error: any) => {
       toast.error(error?.response?.data || "Something went wrong", {
         style: { textAlign: "center" },
       });
-      console.log(error?.response?.data || error);
+      console.error(error);
+    },
+    // (Optional) optimistic update
+    optimisticUpdate: (oldData, newItem) => {
+      return oldData.map((students: any) =>
+        students.id === id ? { ...students, ...newItem } : students
+      );
+    },
+  });
+
+  // ✅ Handle form submission
+  const onSubmit = (data: FormShape) => {
+    if (!id) return;
+
+    if (Object.keys(dirtyFields).length === 0) {
+      toast("No changes detected", { style: { textAlign: "center" } });
+      return;
     }
+
+    mutate(data);
   };
 
   // Create a new Student
@@ -119,14 +129,14 @@ function UpdateTeacher() {
         />
       </div>
       <div>
-        <label htmlFor="address">Address</label>
+        <label htmlFor="homeAddress">Address</label>
         <Input
           isWithZod
           dirtyFields={dirtyFields}
           errors={errors}
-          id="address"
+          id="homeAddress"
           register={register}
-          registerValue="address"
+          registerValue="homeAddress"
           placeholder="Share-now, Kabul"
         />
       </div>

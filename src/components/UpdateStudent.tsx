@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useAddQuery } from "../hooks/useAddQuery";
 import useBranches from "../hooks/useBranches";
@@ -16,6 +16,8 @@ import status from "../utils/status";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
+import { useMutate } from "../hooks/useMutate";
+import { QUERY_KEYS } from "../services/constants";
 type FormShape = z.infer<typeof studentsSchema>;
 
 function UpdateStudent() {
@@ -65,34 +67,41 @@ function UpdateStudent() {
     resolver: zodResolver(studentsSchema),
     defaultValues: {},
   });
-
-  const onSubmit = async (data: FormShape) => {
-    try {
-      if (!id) return;
-
-      // Check if there are any changes
-      if (Object.keys(dirtyFields).length === 0) {
-        toast("No changes detected", { style: { textAlign: "center" } });
-        return;
-      }
-
-      const req = await axiosInstance.patch<FormShape>(
-        "/api/students/" + id,
-        data
-      );
-      const name = req.data;
-      toast.success(`${name.firstName} ${name.lastName} updated successfully`, {
+  const { mutate, isPending } = useMutate<FormShape, FormShape>({
+    endpoint: `/api/students/${id}`,
+    method: "patch",
+    invalidateKeys: [QUERY_KEYS.STUDENTS],
+    onSuccess: (data) => {
+      toast.success(`${data.firstName} ${data.lastName} updated successfully`, {
         style: { textAlign: "center", color: "var(--dark-brand-1)" },
       });
       navigate(-1);
-    } catch (error: any) {
+    },
+    onError: (error: any) => {
       toast.error(error?.response?.data || "Something went wrong", {
         style: { textAlign: "center" },
       });
-      console.log(error?.response?.data || error);
-    }
-  };
+      console.error(error);
+    },
+    // (Optional) optimistic update
+    optimisticUpdate: (oldData, newItem) => {
+      return oldData.map((students: any) =>
+        students.id === id ? { ...students, ...newItem } : students
+      );
+    },
+  });
 
+  // ✅ Handle form submission
+  const onSubmit = (data: FormShape) => {
+    if (!id) return;
+
+    if (Object.keys(dirtyFields).length === 0) {
+      toast("No changes detected", { style: { textAlign: "center" } });
+      return;
+    }
+
+    mutate(data);
+  };
   // Create a new Student
   return (
     <Form

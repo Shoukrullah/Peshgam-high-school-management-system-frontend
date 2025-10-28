@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance, { APIClient } from "../services/axios-instance";
 import type { studentShape } from "../types/students";
 import { ApiClientStudents } from "../services/allServices";
+import { QUERY_KEYS } from "../services/constants";
 
 interface UseStudentsOptions {
   enabled?: boolean; // control if the query should run
@@ -21,7 +22,7 @@ const useStudents = (
     (page === undefined && classId === undefined);
 
   return useQuery({
-    queryKey: ["students", { page, classId }],
+    queryKey: [QUERY_KEYS.STUDENTS, { page, classId }],
     queryFn: () => ApiClientStudents.getAll({ page, classId }),
     enabled: isEnabled,
   });

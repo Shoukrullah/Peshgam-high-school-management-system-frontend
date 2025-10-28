@@ -3,21 +3,21 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import useClasses from "../hooks/useClasses";
-import axiosInstance from "../services/axios-instance";
-import classSchema from "../types/schemas/classSchema";
-import Form from "./Form";
-import DropDownStructure from "./reactDropDown/DropDownStructure";
-import useTeacher from "../hooks/useTeachers";
-import grades from "../utils/grade";
 import useBranches from "../hooks/useBranches";
+import { useMutate } from "../hooks/useMutate";
+import useTeacher from "../hooks/useTeachers";
+import { QUERY_KEYS } from "../services/constants";
+import type { classes } from "../types/classes";
+import classSchema from "../types/schemas/classSchema";
+import grades from "../utils/grade";
+import Form from "./Form";
 import Input from "./Input";
+import DropDownStructure from "./reactDropDown/DropDownStructure";
 type FormShape = z.infer<typeof classSchema>;
 
 function CreateClass() {
-  const { data: classes } = useClasses();
   const { data: teachers } = useTeacher();
-  const {data: branches} = useBranches()
+  const { data: branches } = useBranches();
   const navigate = useNavigate();
   const {
     register,
@@ -27,26 +27,44 @@ function CreateClass() {
     formState: { errors, dirtyFields, isSubmitting },
   } = useForm<FormShape>({ resolver: zodResolver(classSchema) });
 
-  const onSubmit = async (data: FormShape) => {
-    try {
-      const req = await axiosInstance.post<FormShape>("/api/classes", data);
-      const name = req.data;
-      toast.success(`Class is added successfully`, {
+  const { mutate, isPending } = useMutate<classes, FormShape>({
+    endpoint: "/api/classes",
+    method: "post",
+    invalidateKeys: [QUERY_KEYS.CLASSES],
+
+    // ✅ Optimistic UI update
+    optimisticUpdate: (oldData, newItem) => [
+      ...oldData,
+      {
+        // Temporary ID (used for instant UI feedback)
+        id: Math.random(),
+        name: newItem.name,
+        grade: newItem.grade,
+        branchId: newItem.branchId,
+        teacherId: newItem.branchId,
+      } as classes,
+    ],
+
+    onSuccess: (data) => {
+      toast.success(`${data.name} class is added successfully`, {
         style: { textAlign: "center", color: "var(--dark-brand-1)" },
       });
-      navigate(-1);
       reset();
-    } catch (error: any) {
-      toast.error(error.response.data, {
-        style: {
-          textAlign: "center",
-        },
-      });
-      // navigate(-1);
-      console.log(error.response.data);
-    }
+      navigate(-1);
+    },
+
+    onError: (error: any) => {
+      const message =
+        error?.response?.data || "Something went wrong, please try again.";
+      toast.error(message, { style: { textAlign: "center" } });
+      console.error("Class creation failed:", message);
+    },
+  });
+
+  const onSubmit = (data: FormShape) => {
+    mutate(data);
   };
-  // Create a new Student
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit)}
@@ -54,17 +72,17 @@ function CreateClass() {
       isSubmitting={isSubmitting}
     >
       <div>
-              <label htmlFor="name">Class Name</label>
-              <Input
-                isWithZod
-                dirtyFields={dirtyFields}
-                errors={errors}
-                id="name"
-                register={register}
-                registerValue="name"
-                placeholder="P-1-QotaSanqi"
-              />
-            </div>
+        <label htmlFor="name">Class Name</label>
+        <Input
+          isWithZod
+          dirtyFields={dirtyFields}
+          errors={errors}
+          id="name"
+          register={register}
+          registerValue="name"
+          placeholder="P-1-QotaSanqi"
+        />
+      </div>
       <div>
         <label htmlFor="grade">Grade</label>
         <Controller

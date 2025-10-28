@@ -3,49 +3,79 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import axiosInstance from "../services/axios-instance";
 import branchesSchema from "../types/schemas/branchesSchema";
 import afghanistanProvinces from "../utils/afghanistanProvinces";
 import Form from "./Form";
 import Input from "./Input";
 import SuggestionsInput from "./SuggestionsInput";
+import { useMutate } from "../hooks/useMutate";
+import { QUERY_KEYS } from "../services/constants";
+import type { branches } from "../types/branches";
+
 type FormShape = z.infer<typeof branchesSchema>;
 
 function CreateBranch() {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, dirtyFields, isSubmitting },
     setValue,
-  } = useForm<FormShape>({ resolver: zodResolver(branchesSchema) });
+  } = useForm<FormShape>({
+    resolver: zodResolver(branchesSchema),
+  });
 
-  const onSubmit = async (data: FormShape) => {
-    try {
-      const req = await axiosInstance.post<FormShape>("/api/branches", data);
-      const branch = req.data;
-      toast.success(`${branch.name} is added successfully`, {
+  const { mutate, isPending } = useMutate<branches, FormShape>({
+    endpoint: "/api/branches",
+    method: "post",
+    invalidateKeys: [QUERY_KEYS.BRANCH],
+
+    // ✅ Optimistic UI update
+    optimisticUpdate: (oldData, newItem) => [
+      ...oldData,
+      {
+        // Temporary ID (used for instant UI feedback)
+        id: Math.random(),
+        name: newItem.name,
+        address: newItem.address,
+        city: newItem.city || "",
+        // Optional empty arrays to satisfy the `branches` type
+        students: [],
+        classes: [],
+        teachers: [],
+        createdAt: new Date(),
+        updatedAt: null,
+      } as branches,
+    ],
+  
+
+    onSuccess: (data) => {
+      toast.success(`${data.name} added successfully!`, {
         style: { textAlign: "center", color: "var(--dark-brand-1)" },
       });
-      navigate(-1);
       reset();
-    } catch (error: any) {
-      toast.error(error.response.data, {
-        style: {
-          textAlign: "center",
-        },
-      });
-      // navigate(-1);
-      console.log(error.response.data);
-    }
+      navigate(-1);
+    },
+
+    onError: (error: any) => {
+      const message =
+        error?.response?.data || "Something went wrong, please try again.";
+      toast.error(message, { style: { textAlign: "center" } });
+      console.error("Branch creation failed:", message);
+    },
+  });
+
+  const onSubmit = (data: FormShape) => {
+    mutate(data);
   };
-  // Create a new Student
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit)}
-      HeadingLabel="Create a new Branch"
-      isSubmitting={isSubmitting}
+      HeadingLabel="Create a New Branch"
+      isSubmitting={isSubmitting || isPending}
     >
       <div>
         <label htmlFor="name">Branch Name</label>
@@ -58,6 +88,7 @@ function CreateBranch() {
           registerValue="name"
         />
       </div>
+
       <div>
         <label htmlFor="address">Address</label>
         <Input
@@ -70,6 +101,7 @@ function CreateBranch() {
           placeholder="Share-now, Kabul"
         />
       </div>
+
       <div>
         <label htmlFor="city">City</label>
         <SuggestionsInput

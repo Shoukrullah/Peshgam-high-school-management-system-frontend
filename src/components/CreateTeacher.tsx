@@ -11,6 +11,9 @@ import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
 import degree from "../utils/degree";
+import { useMutate } from "../hooks/useMutate";
+import type { teacherShape } from "../types/teachers";
+import { QUERY_KEYS } from "../services/constants";
 type FormShape = z.infer<typeof teacherSchema>;
 
 function CreateTeacher() {
@@ -23,28 +26,46 @@ function CreateTeacher() {
     control,
     formState: { errors, dirtyFields, isSubmitting },
   } = useForm<FormShape>({ resolver: zodResolver(teacherSchema) });
+  const { mutate, isPending } = useMutate<teacherShape, FormShape>({
+    endpoint: "/api/teachers",
+    method: "post",
+    invalidateKeys: [QUERY_KEYS.TEACHERS],
 
-  const onSubmit = async (data: FormShape) => {
-    try {
-      const req = await axiosInstance.post<FormShape>("/api/teachers", data);
-      const name = req.data;
+    // ✅ Optimistic UI update
+    optimisticUpdate: (oldData, newItem) => [
+      ...oldData,
+      {
+        id: Date.now(),
+        branchId: newItem.branchId,
+        degree: newItem.degree,
+        firstName: newItem.firstName,
+        homeAddress: newItem.homeAddress,
+        lastName: newItem.lastName,
+        phone: newItem.phone,
+      } as teacherShape,
+    ],
+
+    onSuccess: (data) => {
       toast.success(
-        `${name.firstName} ${name.lastName} is added successfully`,
+        `${data.firstName} ${data.lastName} is added successfully`,
         {
           style: { textAlign: "center", color: "var(--dark-brand-1)" },
         }
       );
       navigate(-1);
       reset();
-    } catch (error: any) {
-      toast.error(error.response.data, {
-        style: {
-          textAlign: "center",
-        },
-      });
-      // navigate(-1);
-      console.log(error.response.data);
-    }
+    },
+
+    onError: (error: any) => {
+      const message =
+        error?.response?.data || "Something went wrong, please try again.";
+      toast.error(message, { style: { textAlign: "center" } });
+      console.error("Class creation failed:", message);
+    },
+  });
+
+  const onSubmit = (data: FormShape) => {
+    mutate(data);
   };
   // Create a new Student
   return (

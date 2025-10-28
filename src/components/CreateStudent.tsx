@@ -1,17 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import delay from "delay";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import useBranches from "../hooks/useBranches";
 import useClasses from "../hooks/useClasses";
-import axiosInstance from "../services/axios-instance";
 import studentsSchema from "../types/schemas/studentsSchema";
 import gender from "../utils/Gender";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
+import { useMutate } from "../hooks/useMutate";
+import type { studentShape } from "../types/students";
+import { QUERY_KEYS } from "../services/constants";
 type FormShape = z.infer<typeof studentsSchema>;
 
 function CreateStudent() {
@@ -25,30 +26,47 @@ function CreateStudent() {
     control,
     formState: { errors, dirtyFields, isSubmitting },
   } = useForm<FormShape>({ resolver: zodResolver(studentsSchema) });
+  const { mutate, isPending } = useMutate<studentShape, FormShape>({
+    endpoint: "/api/students",
+    method: "post",
+    invalidateKeys: [QUERY_KEYS.STUDENTS],
 
-  const onSubmit = async (data: FormShape) => {
-    try {
-      await delay(10000);
-      const req = await axiosInstance.post<FormShape>("/api/students", data);
-      const name = req.data;
+    // ✅ Optimistic UI update
+    optimisticUpdate: (oldData, newItem) => [
+      ...oldData,
+      {
+        id: Date.now(),
+        firstName: newItem.firstName,
+        lastName: newItem.lastName,
+        phone: newItem.phone,
+        branchId: newItem.branchId,
+        classId: newItem.classId,
+      } as studentShape,
+    ],
+
+    onSuccess: (data) => {
       toast.success(
-        `${name.firstName} ${name.lastName} is added successfully`,
+        `${data.firstName} ${data.lastName} is added successfully`,
         {
           style: { textAlign: "center", color: "var(--dark-brand-1)" },
         }
       );
       navigate(-1);
       reset();
-    } catch (error: any) {
-      toast.error(error.response.data, {
-        style: {
-          textAlign: "center",
-        },
-      });
-      // navigate(-1);
-      console.log(error.response.data);
-    }
+    },
+
+    onError: (error: any) => {
+      const message =
+        error?.response?.data || "Something went wrong, please try again.";
+      toast.error(message, { style: { textAlign: "center" } });
+      console.error("Class creation failed:", message);
+    },
+  });
+
+  const onSubmit = (data: FormShape) => {
+    mutate(data);
   };
+
   // Create a new Student
   return (
     <Form

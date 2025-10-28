@@ -8,6 +8,12 @@ interface Props {
 }
 
 function DashboardCharts({ femaleCount, maleCount }: Props) {
+  if (!femaleCount || !maleCount)
+    return (
+      <p className={styles.noStudents}>
+        There is no students to display the charts!
+      </p>
+    );
   return (
     <div className={styles.chartsContainer}>
       <ChartForStudentsGender femaleCount={femaleCount} maleCount={maleCount} />

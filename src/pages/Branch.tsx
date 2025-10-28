@@ -1,3 +1,4 @@
+import Button from "../components/Button";
 import CreateBranch from "../components/CreateBranch";
 import DeleteUser from "../components/DeleteUser";
 import GlobalModalWindow from "../components/GlobalModalWindow";
@@ -23,6 +24,7 @@ function Branch() {
   } else if (query === "desc") {
     sortedData.sort((a, b) => `${b.name}`.localeCompare(`${a.name}`));
   }
+
   return (
     <>
       <div>

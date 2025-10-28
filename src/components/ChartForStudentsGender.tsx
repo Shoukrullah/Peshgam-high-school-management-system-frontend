@@ -1,6 +1,6 @@
 import { FaFemale, FaMale } from "react-icons/fa";
 import { Pie, PieChart } from "recharts";
-import styles from './ChartGender.module.css'
+import styles from "./ChartGender.module.css";
 
 export default function ChartForStudentsGender({
   femaleCount,
@@ -27,9 +27,7 @@ export default function ChartForStudentsGender({
     <div className={styles.genderChartContainer}>
       <div className="flexSpaceBetween">
         <p>Students</p>
-        <p>
-          &middot;&middot;&middot;
-        </p>
+        <p>&middot;&middot;&middot;</p>
       </div>
       <div
         style={{
@@ -43,10 +41,7 @@ export default function ChartForStudentsGender({
           outline: "none",
         }}
       >
-        <PieChart
-          responsive
-          style={{ aspectRatio: 1 }}
-        >
+        <PieChart responsive style={{ aspectRatio: 1 }}>
           <MyPie />
         </PieChart>
         <div
@@ -60,11 +55,13 @@ export default function ChartForStudentsGender({
           }}
         >
           {maleCount && <FaMale color="#0088FE" fontSize={"3.5rem"} />}
-          {femaleCount && <FaFemale color="#FF8042" fontSize={"3.5rem"} />}
+          {femaleCount !== 0 && (
+            <FaFemale color="#FF8042" fontSize={"3.5rem"} />
+          )}
         </div>
       </div>
       <div className={styles.afterContainer}>
-        <div style={{}}>
+        <div>
           <p>{maleCount}</p>
           <p>
             boys ({Math.ceil((maleCount / (maleCount + femaleCount)) * 100)}%)
