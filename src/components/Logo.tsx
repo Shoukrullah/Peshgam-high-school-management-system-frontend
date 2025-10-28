@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/pictures/QuranKarim.webp";
+import logo from "../../public/QuranKarim.webp";
 import styles from "./Logo.module.css";
 function Logo() {
   const navigate = useNavigate();

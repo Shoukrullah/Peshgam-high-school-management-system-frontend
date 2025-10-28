@@ -8,17 +8,22 @@ import useStudents from "../hooks/useStudents";
 import { studentHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
 import Error from "../components/Error";
+import { useEffect } from "react";
 
 function Student() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
 
   const { data, isLoading, error } = useStudents(currentPage);
+  useEffect(() => {
+    document.title = "Peshgam - Students";
+  }, []);
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;
 
   const query = getQuery("sort") as SortOrder;
   const sortedData = sortByQuery(data?.students, "firstName", query);
+
   return (
     <>
       <div>

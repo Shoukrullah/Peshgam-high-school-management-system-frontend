@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ClassesMutations from "../components/ClassesMutations";
 import Error from "../components/Error";
 import Loading from "../components/loading";
@@ -13,10 +14,15 @@ function Classes() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
   const { data, isLoading, error } = useClasses(currentPage);
+
+  useEffect(() => {
+    document.title = "Peshgam - Classes";
+  }, []);
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;
   const query = getQuery("sort") as SortOrder;
   const sortedData = sortByQuery(data?.classes, "name", query);
+
   return (
     <>
       <div>

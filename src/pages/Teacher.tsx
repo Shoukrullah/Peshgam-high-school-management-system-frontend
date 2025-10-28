@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Error from "../components/Error";
 import Loading from "../components/loading";
 import Pagination from "../components/pagination/Pagination";
@@ -13,10 +14,14 @@ function Teacher() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
   const { data, isLoading, error } = useTeacher(currentPage);
+  useEffect(() => {
+    document.title = "Peshgam - Teachers";
+  }, []);
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;
   const query = getQuery("sort") as SortOrder;
   const sortedData = sortByQuery(data?.teachers, "firstName", query);
+
   return (
     <>
       <div>

@@ -1,5 +1,6 @@
-import delay from "delay";
+import { useEffect } from "react";
 import BranchesMutations from "../components/BranchesMutations";
+import Error from "../components/Error";
 import Loading from "../components/loading";
 import Pagination from "../components/pagination/Pagination";
 import Table from "../components/Table";
@@ -8,12 +9,14 @@ import { useAddQuery } from "../hooks/useAddQuery";
 import useBranches from "../hooks/useBranches";
 import { branchHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
-import Error from "../components/Error";
 
 function Branch() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1");
   const { data, isLoading, error } = useBranches(currentPage);
+  useEffect(() => {
+    document.title = "Peshgam - Branches";
+  }, []);
 
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;

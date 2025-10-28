@@ -1,9 +1,10 @@
 import { BsBug } from "react-icons/bs";
-import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
+import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 import Heading from "../components/Heading";
 
 function ErrorPage() {
   const error = useRouteError();
+
   return (
     <>
       <div className="error-page">
