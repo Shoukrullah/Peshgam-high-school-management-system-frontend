@@ -1,5 +1,3 @@
-import ChartForStudentsGender from "../components/ChartForStudentsGender";
-import PieChartInGrid from "../components/ChartForStudentsGender";
 import DashboardCharts from "../components/DashboardCharts";
 import Heading from "../components/Heading";
 import ShowDashBoardComponent from "../components/ShowDashBoardComponent";
@@ -17,31 +15,25 @@ function Dashboard() {
     (stu) => stu.gender === "MALE"
   ).length;
 
-  const totalFemale =
-    students?.students && totalMale && students.students.length - totalMale;
+  const totalFemale = students?.students.map((stu) => stu.gender === "FEMALE").length;
 
   if (isLoading) return <p>loading...</p>;
   if (error) return <p>{error.message}</p>;
-  if (
-    !data ||
-    !classes ||
-    !teachers ||
-    !students ||
-    totalMale === undefined ||
-    totalFemale === undefined
-  )
-    return null;
-
   return (
     <div>
-      <Heading margin="1rem 0 0 0" fontSize="2.5rem">Dashboard</Heading>
+      <Heading margin="1rem 0 0 0" fontSize="2.5rem">
+        Dashboard
+      </Heading>
       <ShowDashBoardComponent
         branches={data?.branches.length}
-        classes={classes?.classes.length}
-        students={students?.students.length}
-        teachers={teachers?.teachers.length}
+        classes={classes?.classes.length || 0}
+        students={students?.students.length || 0}
+        teachers={teachers?.teachers.length || 0}
       />
-      <DashboardCharts femaleCount={totalFemale} maleCount={totalMale} />
+      <DashboardCharts
+        femaleCount={totalFemale || 0}
+        maleCount={totalMale || 0}
+      />
     </div>
   );
 }

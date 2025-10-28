@@ -29,12 +29,12 @@ function Toolbar({ route, add }: Props) {
     <div className={styles.ToolbarContainer}>
       <Heading margin="1rem 0 0 0" fontSize="2.5rem">All {route}</Heading>
       <div className={styles.rightSideTool}>
-        <div className={styles.searchBarContainer}>
+        {/* <div className={styles.searchBarContainer}>
           <label htmlFor="search">
             <PiMagnifyingGlassThin />
           </label>
           <input id="search" type="text" placeholder="Search..." />
-        </div>
+        </div> */}
 
         {/* buttons and search */}
         <div className={styles.Buttons}>

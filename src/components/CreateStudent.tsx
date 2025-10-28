@@ -41,6 +41,7 @@ function CreateStudent() {
         phone: newItem.phone,
         branchId: newItem.branchId,
         classId: newItem.classId,
+        address: newItem.address
       } as studentShape,
     ],
 

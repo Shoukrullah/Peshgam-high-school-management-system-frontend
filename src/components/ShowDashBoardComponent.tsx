@@ -4,10 +4,10 @@ import { PiStudentFill } from "react-icons/pi";
 import ShowDashboard from "./ShowDashboard";
 
 interface Props {
-  branches: number;
-  classes: number;
-  teachers: number;
-  students: number;
+  branches: number | undefined;
+  classes: number | undefined;
+  teachers: number | undefined;
+  students: number | undefined;
 }
 function ShowDashBoardComponent({
   branches,
@@ -18,16 +18,16 @@ function ShowDashBoardComponent({
   return (
     <div className="showComponentContainer">
       <ShowDashboard icon={<BsHouseDoor />} label="All Branches">
-        {branches}
+        {branches || 0}
       </ShowDashboard>
       <ShowDashboard icon={<FaChalkboardTeacher />} label="Total Classes">
-        {classes}
+        {classes || 0}
       </ShowDashboard>
       <ShowDashboard icon={<FaUsers />} label="Total Teachers">
-        {teachers}
+        {teachers || 0}
       </ShowDashboard>
       <ShowDashboard icon={<PiStudentFill />} label="Total Students">
-        {students}
+        {students || 0}
       </ShowDashboard>
     </div>
   );

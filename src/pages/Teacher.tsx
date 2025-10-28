@@ -1,37 +1,18 @@
-import CreateTeacher from "../components/CreateTeacher";
-import DeleteUser from "../components/DeleteUser";
-import GlobalModalWindow from "../components/GlobalModalWindow";
 import Pagination from "../components/pagination/Pagination";
 import Table from "../components/Table";
+import TeachersMutations from "../components/TeachersMutations";
 import Toolbar from "../components/Toolbar";
-import UpdateTeacher from "../components/UpdateTeacher";
 import { useAddQuery } from "../hooks/useAddQuery";
 import useTeacher from "../hooks/useTeachers";
 import { teacherHeader } from "../utils/headersForTables";
+import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
 
 function Teacher() {
   const { getQuery } = useAddQuery();
   const currentPage = parseInt(getQuery("page") || "1", 10);
-
   const { data, isLoading, error } = useTeacher(currentPage);
-
-  const query = getQuery("sort");
-  let sortedData = data?.teachers ? [...data.teachers] : [];
-
-  if (query === "asc") {
-    sortedData.sort((a, b) =>
-      `${a.firstName} ${a.lastName}`.localeCompare(
-        `${b.firstName} ${b.lastName}`
-      )
-    );
-  } else if (query === "desc") {
-    sortedData.sort((a, b) =>
-      `${b.firstName} ${b.lastName}`.localeCompare(
-        `${a.firstName} ${a.lastName}`
-      )
-    );
-  }
-  console.log(data?.totalPages);
+  const query = getQuery("sort") as SortOrder;
+  const sortedData = sortByQuery(data?.teachers, "firstName", query);
   return (
     <>
       <div>
@@ -45,21 +26,7 @@ function Teacher() {
         />
         <Pagination totalPages={data?.totalPages || 1} />
       </div>
-      {getQuery("add") === "teacher" && (
-        <GlobalModalWindow>
-          <CreateTeacher />
-        </GlobalModalWindow>
-      )}
-      {getQuery("edit")?.includes("teachers-delete") && (
-        <GlobalModalWindow>
-          <DeleteUser singleRoute="Teacher" urlRoute="teachers" />
-        </GlobalModalWindow>
-      )}
-      {getQuery("edit")?.includes("teachers-update") && (
-        <GlobalModalWindow>
-          <UpdateTeacher />
-        </GlobalModalWindow>
-      )}
+      <TeachersMutations />
     </>
   );
 }

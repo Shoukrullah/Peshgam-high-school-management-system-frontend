@@ -8,7 +8,7 @@ interface Props {
 }
 
 function DashboardCharts({ femaleCount, maleCount }: Props) {
-  if (!femaleCount || !maleCount)
+  if (femaleCount === 0 && maleCount === 0)
     return (
       <p className={styles.noStudents}>
         There is no students to display the charts!

@@ -54,7 +54,7 @@ export default function ChartForStudentsGender({
             gap: ".1rem",
           }}
         >
-          {maleCount && <FaMale color="#0088FE" fontSize={"3.5rem"} />}
+          {maleCount !== 0 && <FaMale color="#0088FE" fontSize={"3.5rem"} />}
           {femaleCount !== 0 && (
             <FaFemale color="#FF8042" fontSize={"3.5rem"} />
           )}
