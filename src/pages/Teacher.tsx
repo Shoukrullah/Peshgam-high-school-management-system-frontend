@@ -1,18 +1,19 @@
 import { useEffect } from "react";
-import Error from "../components/Error";
-import Loading from "../components/loading";
-import Pagination from "../components/pagination/Pagination";
-import Table from "../components/Table";
-import TeachersMutations from "../components/TeachersMutations";
-import Toolbar from "../components/Toolbar";
-import { useAddQuery } from "../hooks/useAddQuery";
-import useTeacher from "../hooks/useTeachers";
+import {
+  Error,
+  Loading,
+  Pagination,
+  TeachersMutations,
+  Table,
+  Toolbar,
+} from "../components";
+import { useTeacher, useAddQuery } from "../hooks";
 import { teacherHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
 
 function Teacher() {
   const { getQuery } = useAddQuery();
-  const currentPage = parseInt(getQuery("page") || "1", 10);
+  const currentPage = parseInt(getQuery("page") || "1");
   const { data, isLoading, error } = useTeacher(currentPage);
   useEffect(() => {
     document.title = "Peshgam - Teachers";

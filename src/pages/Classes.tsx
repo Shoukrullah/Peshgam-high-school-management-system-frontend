@@ -1,12 +1,6 @@
 import { useEffect } from "react";
-import ClassesMutations from "../components/ClassesMutations";
-import Error from "../components/Error";
-import Loading from "../components/loading";
-import Pagination from "../components/pagination/Pagination";
-import Table from "../components/Table";
-import Toolbar from "../components/Toolbar";
-import { useAddQuery } from "../hooks/useAddQuery";
-import useClasses from "../hooks/useClasses";
+import {ClassesMutations, Error,Loading, Pagination,Table,Toolbar,} from '../components';
+import {useAddQuery,useClasses} from '../hooks'
 import { classHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
 
@@ -40,5 +34,4 @@ function Classes() {
     </>
   );
 }
-
 export default Classes;

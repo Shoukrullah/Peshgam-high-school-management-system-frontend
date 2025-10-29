@@ -1,9 +1,8 @@
+import { useState } from "react";
 import { BsPlus, BsSortDown, BsSortUp } from "react-icons/bs";
-import { PiMagnifyingGlassThin } from "react-icons/pi";
-import { useAddQuery } from "../hooks/useAddQuery";
+import {useAddQuery} from '../hooks'
 import Heading from "./Heading";
 import styles from "./Toolbar.module.css";
-import { useEffect, useState } from "react";
 
 interface Props {
   route: string;

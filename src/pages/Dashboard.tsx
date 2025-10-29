@@ -1,11 +1,12 @@
-import DashboardCharts from "../components/DashboardCharts";
-import Heading from "../components/Heading";
-import Loading from "../components/loading";
-import ShowDashBoardComponent from "../components/ShowDashBoardComponent";
-import useBranches from "../hooks/useBranches";
-import useClasses from "../hooks/useClasses";
-import useStudents from "../hooks/useStudents";
-import useTeacher from "../hooks/useTeachers";
+import { useEffect } from "react";
+import {
+  DashboardCharts,
+  Heading,
+  Loading,
+  ShowDashBoardComponent,
+} from "../components";
+import { useBranches, useClasses, useStudents, useTeacher } from "../hooks";
+
 function Dashboard() {
   const { data, isLoading } = useBranches();
   const { data: classes, isLoading: loadingClasses } = useClasses();
@@ -19,6 +20,10 @@ function Dashboard() {
   const totalFemale = students?.students.map(
     (stu) => stu.gender === "FEMALE"
   ).length;
+
+  useEffect(() => {
+    document.title = "Peshgam - HomePage";
+  }, []);
 
   if (isLoading || loadingClasses || loadingTeachers || loadingStudents)
     return <Loading />;

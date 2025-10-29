@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import AttendanceDescription from "../components/AttendanceDescription";
-import Heading from "../components/Heading";
-import SelectClass from "../components/SelectClass";
+import { AttendanceDescription, Heading, SelectClass } from "../components";
 import type { studentShape } from "../types/students";
 
 function Attendance() {
   const [studentsData, setStudents] = useState<studentShape[] | null>(null);
-
   const updateAttendance = (data: studentShape[]) => {
     setStudents(data);
   };

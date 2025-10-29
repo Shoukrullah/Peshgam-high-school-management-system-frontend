@@ -1,12 +1,6 @@
 import { useEffect } from "react";
-import BranchesMutations from "../components/BranchesMutations";
-import Error from "../components/Error";
-import Loading from "../components/loading";
-import Pagination from "../components/pagination/Pagination";
-import Table from "../components/Table";
-import Toolbar from "../components/Toolbar";
-import { useAddQuery } from "../hooks/useAddQuery";
-import useBranches from "../hooks/useBranches";
+import {BranchesMutations,Error,Loading,Pagination,Table,Toolbar} from '../components'
+import {useBranches,useAddQuery} from "../hooks";
 import { branchHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
 

@@ -1,19 +1,17 @@
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { PiStackOverflowLogoBold, PiWarning } from "react-icons/pi";
 import { RxCheck } from "react-icons/rx";
-import type { z } from "zod";
+import { z } from "zod";
 import axiosInstance from "../services/axios-instance";
 import attendanceSchema from "../types/schemas/attendanceSchema";
 import type { studentShape } from "../types/students";
 import styles from "./AttendanceDescription.module.css";
-import AttendanceTable from "./AttendanceTable";
-import Button from "./Button";
-import Input from "./Input";
+import { AttendanceTable, Button, Input } from "../components";
 import { useNavigate } from "react-router-dom";
 
 type FormShape = z.infer<typeof attendanceSchema>;
@@ -64,7 +62,18 @@ function AttendanceForm({ studentData }: Props) {
   };
 
   const handleSave = () => {
+    const noMarkAtAll = students.every((stu) => !stu.attendanceStatus);
     const anyUnmarked = students.some((stu) => !stu.attendanceStatus);
+    if (noMarkAtAll) {
+      toast("Cannot save: All students are unmarked", {
+        icon: <PiWarning size={30} color="var(--ternary-color)" />,
+        style: {
+          textAlign: "center",
+        },
+      });
+      console.log("Cannot save: Some students are still unmarked");
+      return; // do not send request
+    }
 
     if (anyUnmarked) {
       toast("Cannot save: Some students are still unmarked", {

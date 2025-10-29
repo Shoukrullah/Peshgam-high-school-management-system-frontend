@@ -1,4 +1,3 @@
-import type { studentShape } from "../types/students";
 import toCamelCase from "../utils/toCamelCase";
 
 function AttendanceStudentStatus({ student }: { student: string }) {

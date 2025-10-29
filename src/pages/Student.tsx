@@ -1,14 +1,15 @@
-import Loading from "../components/loading";
-import Pagination from "../components/pagination/Pagination";
-import StudentsMutations from "../components/StudentsMutations";
-import Table from "../components/Table";
-import Toolbar from "../components/Toolbar";
-import { useAddQuery } from "../hooks/useAddQuery";
-import useStudents from "../hooks/useStudents";
+import { useEffect } from "react";
+import {
+  Loading,
+  Pagination,
+  StudentsMutations,
+  Table,
+  Toolbar,
+  Error,
+} from "../components";
+import { useAddQuery, useStudents } from "../hooks";
 import { studentHeader } from "../utils/headersForTables";
 import { sortByQuery, type SortOrder } from "../utils/sortedQuery";
-import Error from "../components/Error";
-import { useEffect } from "react";
 
 function Student() {
   const { getQuery } = useAddQuery();

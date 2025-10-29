@@ -1,10 +1,8 @@
 import { RxDash } from "react-icons/rx";
-import TableEditButtons from "./TableEditButtons";
-import TableImage from "./TableImage";
-import Th from "./Th";
-import styles from "./Table.module.css";
-import toCamelCase from "../utils/toCamelCase";
+import { TableEditButtons, TableImage, Th } from "../components";
 import type { studentShape } from "../types/students";
+import toCamelCase from "../utils/toCamelCase";
+import styles from "./Table.module.css";
 
 interface CommonProps {
   id: number;

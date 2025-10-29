@@ -1,12 +1,13 @@
-import { useAddQuery } from "../hooks/useAddQuery";
-import CreateClass from "./CreateClass";
-import DeleteUser from "./DeleteUser";
-import GlobalModalWindow from "./GlobalModalWindow";
-import UpdateClass from "./UpdateClass";
+import { useAddQuery } from "../hooks";
+import {
+  CreateClass,
+  DeleteUser,
+  GlobalModalWindow,
+  UpdateClass,
+} from "../components";
 
 function ClassesMutations() {
-      const { getQuery } = useAddQuery();
-    
+  const { getQuery } = useAddQuery();
   return (
     <div>
       {getQuery("add") === "class" && (

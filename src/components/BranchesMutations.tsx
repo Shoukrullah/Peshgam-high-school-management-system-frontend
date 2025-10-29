@@ -1,8 +1,10 @@
-import { useAddQuery } from "../hooks/useAddQuery";
-import CreateBranch from "./CreateBranch";
-import DeleteUser from "./DeleteUser";
-import GlobalModalWindow from "./GlobalModalWindow";
-import UpdateBranch from "./UpdateBranch";
+import {
+  CreateBranch,
+  DeleteUser,
+  GlobalModalWindow,
+  UpdateBranch,
+} from "../components";
+import { useAddQuery } from "../hooks";
 
 function BranchesMutations() {
   const { getQuery } = useAddQuery();
