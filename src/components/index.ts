@@ -1,6 +1,6 @@
 export { default as Button } from "./Button";
 export { default as Error } from "./Error";
-export { default as Loading } from "./loading";
+export { default as Loading } from "./LoadingComponent.tsx";
 export { default as Pagination } from "./pagination/Pagination";
 export { default as Table } from "./Table";
 export { default as Toolbar } from "./Toolbar";

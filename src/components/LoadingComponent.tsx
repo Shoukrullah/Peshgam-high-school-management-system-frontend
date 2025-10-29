@@ -1,6 +1,6 @@
 import Spinner from "./Spinner";
 
-function Loading() {
+function LoadingComponent() {
     return (
         <div className="loadingContainer">
             <Spinner height={40} width={40}  />
@@ -8,4 +8,4 @@ function Loading() {
     )
 }
 
-export default Loading
+export default LoadingComponent
