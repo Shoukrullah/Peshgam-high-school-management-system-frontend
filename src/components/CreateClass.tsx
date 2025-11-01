@@ -24,6 +24,7 @@ function CreateClass() {
     handleSubmit,
     reset,
     control,
+    watch,
     formState: { errors, dirtyFields, isSubmitting },
   } = useForm<FormShape>({ resolver: zodResolver(classSchema) });
 

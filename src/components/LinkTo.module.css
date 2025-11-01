@@ -1,0 +1,19 @@
+.Link {
+  border: none;
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.3rem;
+  transition: all .05s linear;
+  color: var(-light-brand-1);
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: small;
+  min-width: 8rem;
+  cursor: pointer;
+  
+}
+.Link:hover,
+.Link:active {
+    color: var(--color-silver-700);
+    text-decoration: underline;
+}

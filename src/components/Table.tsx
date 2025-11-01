@@ -3,6 +3,10 @@ import { TableEditButtons, TableImage, Th } from "../components";
 import type { studentShape } from "../types/students";
 import toCamelCase from "../utils/toCamelCase";
 import styles from "./Table.module.css";
+import { Link } from "react-router-dom";
+import LinkTo from "./LinkTo";
+import type { branches } from "../types/branches";
+import type { classes } from "../types/classes";
 
 interface CommonProps {
   id: number;
@@ -40,7 +44,7 @@ interface StudentShape extends CommonProps {
   address?: string | null;
 }
 
-type TableData = StudentShape | TeacherShape | BranchShape | ClassShape;
+type TableData = StudentShape | TeacherShape | BranchShape | ClassShape ;
 
 interface Props<T extends TableData> {
   data: T[];
@@ -113,7 +117,11 @@ function Table<T extends TableData>({
               const branch = item as BranchShape;
               return (
                 <tr key={branch.id}>
-                  <td>{branch.name}</td>
+                  <td>
+                    <LinkTo href={`/branches/${branch.id}`}>
+                      {branch.name}
+                    </LinkTo>
+                  </td>
                   <td>{branch.city}</td>
                   <td>{branch.address}</td>
                   <td>

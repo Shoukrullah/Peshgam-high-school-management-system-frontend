@@ -1,7 +1,7 @@
 import { BsHouseDoor } from "react-icons/bs";
 import { FaChalkboardTeacher, FaUsers } from "react-icons/fa";
 import { PiStudentFill } from "react-icons/pi";
-import ShowDashboard from "./ShowDashboard";
+import ShowInfo from "./ShowInfo";
 
 interface Props {
   branches: number | undefined;
@@ -17,18 +17,18 @@ function ShowDashBoardComponent({
 }: Props) {
   return (
     <div className="showComponentContainer">
-      <ShowDashboard icon={<BsHouseDoor />} label="All Branches">
+      <ShowInfo icon={<BsHouseDoor />} label="All Branches">
         {branches || 0}
-      </ShowDashboard>
-      <ShowDashboard icon={<FaChalkboardTeacher />} label="Total Classes">
+      </ShowInfo>
+      <ShowInfo icon={<FaChalkboardTeacher />} label="Total Classes">
         {classes || 0}
-      </ShowDashboard>
-      <ShowDashboard icon={<FaUsers />} label="Total Teachers">
+      </ShowInfo>
+      <ShowInfo icon={<FaUsers />} label="Total Teachers">
         {teachers || 0}
-      </ShowDashboard>
-      <ShowDashboard icon={<PiStudentFill />} label="Total Students">
+      </ShowInfo>
+      <ShowInfo icon={<PiStudentFill />} label="Total Students">
         {students || 0}
-      </ShowDashboard>
+      </ShowInfo>
     </div>
   );
 }

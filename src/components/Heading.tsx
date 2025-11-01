@@ -19,7 +19,7 @@ function Heading({
   margin,
   children,
   textAlign,
-  display,
+  display ="flex",
   textTransform,
   letterSpacing,
   wordSpacing,
@@ -36,6 +36,8 @@ function Heading({
     wordSpacing,
     fontWeight,
     padding,
+    alignItems:'center',
+    gap: '1rem'
   };
   const Tag = element;
   return <Tag style={styles}>{children}</Tag>;

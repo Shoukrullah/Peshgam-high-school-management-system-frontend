@@ -6,7 +6,7 @@ interface Props {
   icon: React.ReactNode;
 }
 
-function ShowDashboard({ children, icon, label }: Props) {
+function ShowInfo({ children, icon, label }: Props) {
   const colorTaker = (label: string) => {
     if (label === "All Branches") {
       return {
@@ -48,4 +48,4 @@ function ShowDashboard({ children, icon, label }: Props) {
   );
 }
 
-export default ShowDashboard;
+export default ShowInfo;

@@ -11,6 +11,9 @@ export class APIClient<T> {
   getAll = async (params?: Record<string, any>) => {
     return (await axiosInstance.get<T>(this.endPoint, { params })).data;
   };
+  getOne = async () => {
+    return (await axiosInstance.get<T>(this.endPoint)).data;
+  };
   post = async (data: T) => {
     return (await axiosInstance.post<T>(this.endPoint, data)).data;
   };
