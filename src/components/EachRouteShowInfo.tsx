@@ -1,5 +1,5 @@
-import { BsPerson, BsStar } from "react-icons/bs";
-import { PiStudentFill, PiUser } from "react-icons/pi";
+import { BsGear, BsPerson, BsStar } from "react-icons/bs";
+import { PiChair, PiIsland, PiMapPinThin, PiMicrosoftWordLogo, PiOpenAiLogo, PiStudentFill, PiSubtractSquare, PiUser } from "react-icons/pi";
 import { RxHome } from "react-icons/rx";
 import type { branches } from "../types/branches";
 import type { classes } from "../types/classes";
@@ -7,6 +7,7 @@ import type { studentShape } from "../types/students";
 import type { teacherShape } from "../types/teachers";
 import styles from "./BranchPerId.module.css";
 import ShowInfo from "./ShowInfo";
+import { FaChair, FaClosedCaptioning, FaMap, FaMapPin, FaOpencart, FaOpenid, FaRegStopCircle } from "react-icons/fa";
 
 function EachRouteShowInfo({
   data,
@@ -66,6 +67,22 @@ function EachRouteShowInfo({
             {teacher.degree?.charAt(0).toUpperCase() + teacher.degree?.slice(1)}
           </ShowInfo>
         )}
+      </div>
+    );
+  }
+  if (type === "students") {
+    const student = data as studentShape;
+    return (
+      <div className={styles.ShowInfoContainer}>
+        <ShowInfo icon={<PiChair />} label="Class">
+          {student.class?.name}
+        </ShowInfo>
+        <ShowInfo icon={<BsGear />} label="Student Current Status">
+          {student.status}
+        </ShowInfo>
+        <div>
+          Attendance Chart must be added.
+        </div>
       </div>
     );
   }

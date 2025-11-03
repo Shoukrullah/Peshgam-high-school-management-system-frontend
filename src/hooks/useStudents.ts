@@ -25,9 +25,18 @@ const useStudents = (
     queryKey: [QUERY_KEYS.STUDENTS, { page, classId }],
     queryFn: () => ApiClientStudents.getAll({ page, classId }),
     enabled: isEnabled,
-    staleTime: 1000  // 1 seconds
-
+    staleTime: 1000, // 1 seconds
   });
 };
 
 export default useStudents;
+
+export const useStudent = (studentId: number | undefined) => {
+  const ApiClientTeacher = new APIClient<studentShape>('/api/students/'+ studentId)
+  return useQuery({
+    queryKey: [QUERY_KEYS.UNIQUESTUDENT,studentId],
+    queryFn: ApiClientTeacher.getOne,
+    staleTime: 1000 , // 1 minute
+    enabled: !! studentId
+  })
+};

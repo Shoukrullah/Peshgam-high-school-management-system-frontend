@@ -7,6 +7,7 @@ import toCamelCase from "../utils/toCamelCase";
 import styles from "./Table.module.css";
 import type { CSSProperties } from "react";
 import SpecialText from "./SpecialText";
+import LinkTo from "./LinkTo";
 interface CommonProps {
   id: number;
 }
@@ -83,7 +84,11 @@ function EachTable<T extends TableData>({
               return (
                 <tr key={stu.id} style={rowStyle}>
                   <td style={border}>{i + 1}</td>
-                  <td style={border}>{stu.firstName + " " + stu.lastName}</td>
+                  <td style={border}>
+                    <LinkTo href={`/students/${stu.id}`}>
+                      {stu.firstName + " " + stu.lastName}
+                    </LinkTo>
+                  </td>
                   <td style={border}>
                     {
                       <SpecialText
@@ -106,7 +111,9 @@ function EachTable<T extends TableData>({
                 <tr style={rowStyle} key={teacher.id}>
                   <td style={border}>{i + 1}</td>
                   <td style={border}>
-                    {teacher.firstName + " " + teacher.lastName}
+                    <LinkTo href={`/teachers/${teacher.id}`}>
+                      {teacher.firstName + " " + teacher.lastName}
+                    </LinkTo>
                   </td>
                   <td style={border}>{teacher.phone || <RxDash />}</td>
                   <td style={border}>{teacher.degree || <RxDash />}</td>
@@ -120,7 +127,11 @@ function EachTable<T extends TableData>({
               return (
                 <tr style={i % 2 === 0 ? rowStyle : {}} key={cls.id}>
                   <td style={border}>{i + 1}</td>
-                  <td style={border}>{toCamelCase(cls.name)}</td>
+                  <td style={border}>
+                    <LinkTo href={`/classes/${cls.id}`}>
+                      {toCamelCase(cls.name)}
+                    </LinkTo>
+                  </td>
                   <td style={border}>{toCamelCase(cls.grade)}</td>
                 </tr>
               );

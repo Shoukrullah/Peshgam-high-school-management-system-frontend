@@ -1,20 +1,39 @@
-import { BsHouse, BsHouseCheck, BsPhone, BsUpc } from "react-icons/bs";
-import { FaLandmark, FaOldRepublic, FaSchool, FaStar } from "react-icons/fa";
+import {
+  BsGenderAmbiguous,
+  BsHouse,
+  BsHouseCheck,
+  BsPhone,
+  BsUpc,
+} from "react-icons/bs";
+import {
+  FaHome,
+  FaLandmark,
+  FaMale,
+  FaOldRepublic,
+  FaSchool,
+  FaStar,
+} from "react-icons/fa";
 import {
   PiAddressBookTabsThin,
+  PiAtThin,
   PiCallBell,
   PiChalkboardTeacher,
   PiChalkboardTeacherThin,
   PiCityLight,
   PiFastForwardThin,
+  PiHourglassMediumThin,
+  PiHouseLineThin,
   PiHouseThin,
   PiLineVerticalThin,
+  PiMapPinSimpleThin,
+  PiNeedleDuotone,
   PiPencilLine,
   PiPhoneCall,
   PiPhoneCallThin,
   PiStairs,
   PiStairsThin,
   PiStarThin,
+  PiStudentThin,
   PiUploadLight,
   PiUserThin,
 } from "react-icons/pi";
@@ -25,7 +44,7 @@ import type { studentShape } from "../types/students";
 import type { teacherShape } from "../types/teachers";
 import toCamelCase from "../utils/toCamelCase";
 import SpecialText from "./SpecialText";
-import { RxHome } from "react-icons/rx";
+import { RxDrawingPin, RxHome, RxSewingPin } from "react-icons/rx";
 
 interface Props {
   data: branches | classes | teacherShape | studentShape | null;
@@ -95,6 +114,35 @@ function EachHeaderPerId({ data, type }: Props) {
             <address>Home address: {teacher.homeAddress}</address>
           </SpecialText>
         )}
+      </div>
+    );
+  }
+  if (type === "students") {
+    const student = data as studentShape;
+    return (
+      <div>
+        <Heading fontSize="2.5rem">
+          Student: {`${student.firstName} ${student.lastName}`}
+          <PiStudentThin color="var(--dark-brand-3)" />
+        </Heading>
+        <SpecialText>
+          Branch:
+          {student.branch.name}
+          <PiHouseLineThin />
+        </SpecialText>
+        {student.dob && (
+          <SpecialText>{new Date(student.dob).toDateString()}</SpecialText>
+        )}
+        <SpecialText>
+          {student.phone}
+          <PiPhoneCallThin />
+        </SpecialText>
+        {student.address && (
+          <SpecialText>
+            <address>Home address: {student.address}</address>
+          </SpecialText>
+        )}
+        <SpecialText>{student.gender}</SpecialText>
       </div>
     );
   }

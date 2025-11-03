@@ -10,6 +10,7 @@ import ErrorPage from "./pages/ErrorPage";
 import BranchPerId from "./components/BranchPerId";
 import ClassPerId from "./components/ClassPerId";
 import TeacherPerId from "./components/TeacherPerId";
+import StudentPerId from "./components/StudentPerId";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       },
       { path: "classes/:id", element: <ClassPerId /> },
       { path: "teachers/:id", element: <TeacherPerId /> },
+      { path: "students/:id", element: <StudentPerId /> },
     ],
   },
 ]);
