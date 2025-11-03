@@ -13,3 +13,14 @@ const useTeacher = (page?: number) => {
   });
 };
 export default useTeacher;
+
+
+export const useUniqueTeacher = (teacherId:number | undefined) => {
+  const ApiClientTeacher = new APIClient<teacherShape>('/api/teachers/'+ teacherId)
+  return useQuery({
+    queryKey: [QUERY_KEYS.UNIQUETEACHER, teacherId],
+    queryFn: ApiClientTeacher.getOne,
+    staleTime: 1000, // 1 minute
+    enabled: !! teacherId
+  })
+}

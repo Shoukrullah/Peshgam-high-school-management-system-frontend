@@ -25,7 +25,7 @@ export const useBranch = (branchId: number | undefined) => {
   const ApiClientBranch = new APIClient<branches>(`/api/branches/${branchId}`);
 
   return useQuery({
-    queryKey: [QUERY_KEYS.BRANCH, branchId],
+    queryKey: [QUERY_KEYS.UNIQUEBRANCH, branchId],
     queryFn: () => ApiClientBranch.getOne(),
     staleTime: 1000,
     enabled: !!branchId,

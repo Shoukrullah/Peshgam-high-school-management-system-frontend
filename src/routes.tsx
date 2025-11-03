@@ -8,6 +8,8 @@ import Attendance from "./pages/Attendance";
 import Branch from "./pages/Branch";
 import ErrorPage from "./pages/ErrorPage";
 import BranchPerId from "./components/BranchPerId";
+import ClassPerId from "./components/ClassPerId";
+import TeacherPerId from "./components/TeacherPerId";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,8 @@ const router = createBrowserRouter([
         path: "branches/:id",
         element: <BranchPerId />,
       },
+      { path: "classes/:id", element: <ClassPerId /> },
+      { path: "teachers/:id", element: <TeacherPerId /> },
     ],
   },
 ]);

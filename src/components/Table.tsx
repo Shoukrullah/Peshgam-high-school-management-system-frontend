@@ -2,11 +2,8 @@ import { RxDash } from "react-icons/rx";
 import { TableEditButtons, TableImage, Th } from "../components";
 import type { studentShape } from "../types/students";
 import toCamelCase from "../utils/toCamelCase";
-import styles from "./Table.module.css";
-import { Link } from "react-router-dom";
 import LinkTo from "./LinkTo";
-import type { branches } from "../types/branches";
-import type { classes } from "../types/classes";
+import styles from "./Table.module.css";
 
 interface CommonProps {
   id: number;
@@ -44,7 +41,7 @@ interface StudentShape extends CommonProps {
   address?: string | null;
 }
 
-type TableData = StudentShape | TeacherShape | BranchShape | ClassShape ;
+type TableData = StudentShape | TeacherShape | BranchShape | ClassShape;
 
 interface Props<T extends TableData> {
   data: T[];
@@ -82,7 +79,7 @@ function Table<T extends TableData>({
               return (
                 <tr key={stu.id}>
                   <td className={styles.imgContainer}>
-                    <TableImage stu={stu as studentShape} />
+                    <TableImage stu={stu as studentShape} href="students" />
                   </td>
                   <td>{toCamelCase(stu.class?.grade || "")}</td>
                   <td>{stu.branch.name}</td>
@@ -100,7 +97,7 @@ function Table<T extends TableData>({
               return (
                 <tr key={teacher.id}>
                   <td className={styles.imgContainer}>
-                    <TableImage stu={teacher} />
+                    <TableImage stu={teacher} href="teachers" />
                   </td>
                   <td>{teacher.branch.name}</td>
                   <td>{teacher.phone || <RxDash />}</td>
@@ -135,7 +132,11 @@ function Table<T extends TableData>({
               const cls = item as ClassShape;
               return (
                 <tr key={cls.id}>
-                  <td>{toCamelCase(cls.name)}</td>
+                  <td>
+                    <LinkTo href={`/classes/${cls.id}`}>
+                      {toCamelCase(cls.name)}
+                    </LinkTo>
+                  </td>
                   <td>{toCamelCase(cls.grade)}</td>
                   <td>{cls.branch.name}</td>
                   <td>

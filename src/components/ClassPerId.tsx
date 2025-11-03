@@ -5,30 +5,32 @@ import { useBranch } from "../hooks/useBranches";
 import EachHeaderPerId from "./EachHeaderPerId";
 import EachRouteShowInfo from "./EachRouteShowInfo";
 import TableForPerBranches from "./TableForPerBranches";
+import { useClass } from "../hooks/useClasses";
+import TableForPerClasses from "./TableForPerClasses";
 
-function BranchPerId() {
+function ClassPerId() {
   const params = useParams() || undefined;
   const [showTable, setShowTable] = useState<
-    "classes" | "students" | "teachers" | ""
-  >("");
+    "classes" | "students" | "teachers"
+  >("classes");
   const id = params ? parseInt(params.id || "") : undefined;
-  const { data, isLoading, error } = useBranch(id);
+  const { data, isLoading, error } = useClass(id || undefined);
   useEffect(() => {
-    if (data) document.title = "Peshgam - Branches - " + data.name;
+    if (data) document.title = "Peshgam - Classes - " + data.name;
   }, [data]);
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;
-  console.log(data?.teachers);
 
-  const onHandelUpdate = (value: "students" | "classes" | "teachers" | "") => {
+  const onHandelUpdate = (value: "students" | "classes" | "teachers") => {
     setShowTable((pre) => (pre === value ? pre : value));
   };
+  console.log(data);
 
   return (
     <div>
-      <EachHeaderPerId type="branches" data={data || null} />
-      <EachRouteShowInfo data={data || null} type="branches" />
-      <TableForPerBranches
+      <EachHeaderPerId data={data || null} type="classes" />
+      <EachRouteShowInfo data={data || null} type="classes" />
+      <TableForPerClasses
         data={data || null}
         onHandleUpdata={onHandelUpdate}
         showTable={showTable}
@@ -37,4 +39,4 @@ function BranchPerId() {
   );
 }
 
-export default BranchPerId;
+export default ClassPerId;
