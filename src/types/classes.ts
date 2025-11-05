@@ -23,7 +23,7 @@ export type classes = {
     id: number;
     createdAt: Date;
     classId: number | null;
-    status: "ACTIVE" | "GRADUATED" | "TRANSFERRED" | "INACTIVE";
+    status: "PRESENT" | "ABSENT" | "PROBLEM";
     date: Date;
     studentId: number;
     note: string | null;

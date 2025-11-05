@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Error, Loading } from ".";
-import { useClass } from "../hooks/useClasses";
+import { useUniqueTeacher } from "../hooks/useTeachers";
 import EachHeaderPerId from "./EachHeaderPerId";
 import EachRouteShowInfo from "./EachRouteShowInfo";
-import TableForPerClasses from "./TableForPerClasses";
-import { useUniqueTeacher } from "../hooks/useTeachers";
 import TableForPerTeacher from "./TableForPerTeacher";
 
 function TeacherPerId() {
   const params = useParams() || undefined;
   const [showTable, setShowTable] = useState<
     "classes" | "students" | "teachers" | ""
-  >("");
+  >("teachers");
   const id = params ? parseInt(params.id || "") : undefined;
   const { data, isLoading, error } = useUniqueTeacher(id || undefined);
   useEffect(() => {
-    if (data) document.title = "Peshgam - Teachers - " + data.firstName;
+    if (data) document.title = "P - Teachers - " + data.firstName;
   }, [data]);
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;

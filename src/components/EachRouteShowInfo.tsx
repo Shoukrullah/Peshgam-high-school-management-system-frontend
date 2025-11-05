@@ -1,5 +1,5 @@
-import { BsGear, BsPerson, BsStar } from "react-icons/bs";
-import { PiChair, PiIsland, PiMapPinThin, PiMicrosoftWordLogo, PiOpenAiLogo, PiStudentFill, PiSubtractSquare, PiUser } from "react-icons/pi";
+import { BsBuilding, BsGear, BsPerson, BsStar } from "react-icons/bs";
+import { PiChair, PiStudentFill, PiUser } from "react-icons/pi";
 import { RxHome } from "react-icons/rx";
 import type { branches } from "../types/branches";
 import type { classes } from "../types/classes";
@@ -7,7 +7,7 @@ import type { studentShape } from "../types/students";
 import type { teacherShape } from "../types/teachers";
 import styles from "./BranchPerId.module.css";
 import ShowInfo from "./ShowInfo";
-import { FaChair, FaClosedCaptioning, FaMap, FaMapPin, FaOpencart, FaOpenid, FaRegStopCircle } from "react-icons/fa";
+import ChartHalfCircleForClassAttendance from "./ChartHalfCircleForClassAttendance";
 
 function EachRouteShowInfo({
   data,
@@ -47,7 +47,7 @@ function EachRouteShowInfo({
           </ShowInfo>
         )}
         <div>
-          <p>A Chart must be added</p>
+          <ChartHalfCircleForClassAttendance data={MyClass} />
         </div>
       </div>
     );
@@ -55,10 +55,10 @@ function EachRouteShowInfo({
   if (type === "teachers") {
     const teacher = data as teacherShape;
     return (
-      <div
-        className={styles.ShowInfoContainer}
-        style={{ justifyContent: "flex-start", gap: "3rem" }}
-      >
+      <div className={styles.ShowInfoContainer}>
+        <ShowInfo icon={<BsBuilding />} label="Branch">
+          {teacher.branch.name}
+        </ShowInfo>
         <ShowInfo icon={<PiStudentFill />} label="Total Classes">
           {teacher.classes.length}
         </ShowInfo>
@@ -73,16 +73,20 @@ function EachRouteShowInfo({
   if (type === "students") {
     const student = data as studentShape;
     return (
-      <div className={styles.ShowInfoContainer}>
-        <ShowInfo icon={<PiChair />} label="Class">
-          {student.class?.name}
-        </ShowInfo>
-        <ShowInfo icon={<BsGear />} label="Student Current Status">
-          {student.status}
-        </ShowInfo>
-        <div>
-          Attendance Chart must be added.
+      <div>
+        <div className={styles.ShowInfoContainer}>
+          <ShowInfo icon={<BsBuilding />} label="Branch">
+            {student.branch.name}
+          </ShowInfo>
+          <ShowInfo icon={<PiChair />} label="Class">
+            {student.class?.name}
+          </ShowInfo>
+          <ShowInfo icon={<BsGear />} label="Student Current Status">
+            {student.status}
+          </ShowInfo>
         </div>
+        <div>Attendance Chart must be added.</div>
+        {/* <ChartHalfCircleForClassAttendance  /> */}
       </div>
     );
   }

@@ -18,21 +18,22 @@ function ShowInfo({ children, icon, label }: Props) {
         color: "#15803d",
         bgColor: "#dcfce7",
       };
-      
     } else if (label === "Total Teachers") {
       return {
         color: "#0369a1",
         bgColor: "#e0f2fe",
       };
-    } else if(label === 'Class') {
+    } else if (label === "Class") {
       return {
         color: "#15803d",
         bgColor: "#dcfce7",
       };
-    }
-    
-    
-    else {
+    } else if (label === "Branch") {
+      return {
+        color: "#4338ca",
+        bgColor: "#e0e7ff",
+      };
+    } else {
       return {
         bgColor: "#fef9c3",
         color: "#a16207",

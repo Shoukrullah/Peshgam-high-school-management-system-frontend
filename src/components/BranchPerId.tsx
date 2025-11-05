@@ -14,7 +14,7 @@ function BranchPerId() {
   const id = params ? parseInt(params.id || "") : undefined;
   const { data, isLoading, error } = useBranch(id);
   useEffect(() => {
-    if (data) document.title = "Peshgam - Branches - " + data.name;
+    if (data) document.title = "P - Branches - " + data.name;
   }, [data]);
   if (isLoading) return <Loading />;
   if (error) return <Error error={error.message} />;

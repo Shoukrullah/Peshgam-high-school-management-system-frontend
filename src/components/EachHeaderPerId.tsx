@@ -29,12 +29,9 @@ function EachHeaderPerId({ data, type }: Props) {
     const branch = data as branches;
     return (
       <div>
-        <Heading fontSize="2.5rem">
+        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
           Branch {branch.name} <BsHouseCheck color="var(--dark-brand-3)" />
         </Heading>
-        <SpecialText>
-          {branch.address} <PiCityLight color="var(--primary-color)" />
-        </SpecialText>
         <SpecialText>{branch.city}</SpecialText>
         <SpecialText>
           {branch?.createdAt && new Date(branch.createdAt).toLocaleDateString()}
@@ -48,7 +45,7 @@ function EachHeaderPerId({ data, type }: Props) {
     const myClass = data as classes;
     return (
       <div>
-        <Heading fontSize="2.5rem">
+        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
           Class: {myClass.name} <FaSchool color="var(--dark-brand-3)" />
         </Heading>
         <SpecialText>
@@ -71,14 +68,10 @@ function EachHeaderPerId({ data, type }: Props) {
     const teacher = data as teacherShape;
     return (
       <div>
-        <Heading fontSize="2.5rem">
+        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
           Teacher: {`${teacher.firstName} ${teacher.lastName}`}
           <PiChalkboardTeacherThin color="var(--dark-brand-3)" />
         </Heading>
-        <SpecialText>
-          Branch:
-          {teacher.branch.name}
-        </SpecialText>
         <SpecialText>
           {teacher.phone}
           <PiPhoneCallThin />
@@ -95,17 +88,12 @@ function EachHeaderPerId({ data, type }: Props) {
     const student = data as studentShape;
     return (
       <div>
-        <Heading fontSize="2.5rem">
+        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
           Student: {`${student.firstName} ${student.lastName}`}
           <PiStudentThin color="var(--dark-brand-3)" />
         </Heading>
-        <SpecialText>
-          Branch:
-          {student.branch.name}
-          <PiHouseLineThin />
-        </SpecialText>
         {student.dob && (
-          <SpecialText>{new Date(student.dob).toDateString()}</SpecialText>
+          <SpecialText>Date of birth: {new Date(student.dob).toLocaleDateString()}</SpecialText>
         )}
         <SpecialText>
           {student.phone}

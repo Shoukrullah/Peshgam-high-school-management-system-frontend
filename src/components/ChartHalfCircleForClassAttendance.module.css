@@ -1,0 +1,60 @@
+.halfChartContainer {
+    /* box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.05); */
+    border-radius: 1rem;
+    padding: .3rem;
+}
+
+.afterContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  /* margin-top: 0.4rem; */
+  /* padding: 0 3.4rem; */
+  font-size: 1.3rem;
+}
+.afterContainer > div {
+  position: relative;
+  text-align: center;
+}
+
+.afterContainer > div p:nth-child(1) {
+  font-weight: 900;
+}
+
+.afterContainer > div p:nth-child(2) {
+  color: var(--dark-brand-3);
+}
+
+.afterContainer > div:first-child::before {
+  position: absolute;
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100%;
+  background-color: var(--green-brand-1);
+}
+.afterContainer > div:nth-child(2)::before {
+  position: absolute;
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100%;
+  background-color: var(--red-brand-2);
+}
+.afterContainer > div:nth-child(3)::before {
+  position: absolute;
+  content: "";
+  width: 2rem;
+  height: 2rem;
+  top: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 100%;
+  background-color: #FF9800;
+}
