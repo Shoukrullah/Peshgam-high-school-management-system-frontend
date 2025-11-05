@@ -1,41 +1,13 @@
+import { BsHouse, BsHouseCheck } from "react-icons/bs";
+import { FaSchool } from "react-icons/fa";
 import {
-  BsGenderAmbiguous,
-  BsHouse,
-  BsHouseCheck,
-  BsPhone,
-  BsUpc,
-} from "react-icons/bs";
-import {
-  FaHome,
-  FaLandmark,
-  FaMale,
-  FaOldRepublic,
-  FaSchool,
-  FaStar,
-} from "react-icons/fa";
-import {
-  PiAddressBookTabsThin,
-  PiAtThin,
-  PiCallBell,
   PiChalkboardTeacher,
   PiChalkboardTeacherThin,
   PiCityLight,
-  PiFastForwardThin,
-  PiHourglassMediumThin,
   PiHouseLineThin,
-  PiHouseThin,
-  PiLineVerticalThin,
-  PiMapPinSimpleThin,
-  PiNeedleDuotone,
   PiPencilLine,
-  PiPhoneCall,
   PiPhoneCallThin,
-  PiStairs,
-  PiStairsThin,
-  PiStarThin,
   PiStudentThin,
-  PiUploadLight,
-  PiUserThin,
 } from "react-icons/pi";
 import { Heading } from ".";
 import type { branches } from "../types/branches";
@@ -44,7 +16,6 @@ import type { studentShape } from "../types/students";
 import type { teacherShape } from "../types/teachers";
 import toCamelCase from "../utils/toCamelCase";
 import SpecialText from "./SpecialText";
-import { RxDrawingPin, RxHome, RxSewingPin } from "react-icons/rx";
 
 interface Props {
   data: branches | classes | teacherShape | studentShape | null;
@@ -86,10 +57,13 @@ function EachHeaderPerId({ data, type }: Props) {
         <SpecialText>
           {myClass.branch.name}
           <BsHouse />
-          {myClass?.createdAt &&
-            new Date(myClass.createdAt).toLocaleDateString()}
-          <PiPencilLine />
         </SpecialText>
+        {myClass?.createdAt && (
+          <SpecialText>
+            {new Date(myClass.createdAt).toLocaleDateString()}
+            <PiPencilLine />
+          </SpecialText>
+        )}
       </div>
     );
   }

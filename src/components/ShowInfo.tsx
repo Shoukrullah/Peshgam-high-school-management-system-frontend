@@ -51,7 +51,7 @@ function ShowInfo({ children, icon, label }: Props) {
       </div>
       <div>
         <p>{label}</p>
-        <p>{children}</p>
+        <p className={styles.children}>{children}</p>
       </div>
     </div>
   );

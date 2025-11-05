@@ -17,13 +17,14 @@ function Dashboard() {
     (stu) => stu.gender === "MALE"
   ).length;
 
-  const totalFemale = students?.students.map(
+  const totalFemale = students?.students.filter(
     (stu) => stu.gender === "FEMALE"
   ).length;
 
   useEffect(() => {
     document.title = "Peshgam - HomePage";
   }, []);
+  console.log(data?.branches);
 
   if (isLoading || loadingClasses || loadingTeachers || loadingStudents)
     return <Loading />;

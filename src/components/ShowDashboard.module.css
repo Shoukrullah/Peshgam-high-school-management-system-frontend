@@ -35,3 +35,7 @@
   font-size: 1.5rem;
   color: var(--dark-brand-3);
 }
+.showComponentContainer .children {
+  color: var(--dark-brand-3) !important;
+  font-size: 1.3rem !important;
+}

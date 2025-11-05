@@ -1,13 +1,13 @@
+import type { CSSProperties } from "react";
 import { RxDash } from "react-icons/rx";
-import { TableEditButtons, TableImage, Th } from "../components";
+import { Th } from "../components";
 import type { classes } from "../types/classes";
 import type { studentShape } from "../types/students";
 import type { teacherShape } from "../types/teachers";
 import toCamelCase from "../utils/toCamelCase";
-import styles from "./Table.module.css";
-import type { CSSProperties } from "react";
-import SpecialText from "./SpecialText";
 import LinkTo from "./LinkTo";
+import SpecialText from "./SpecialText";
+import styles from "./Table.module.css";
 interface CommonProps {
   id: number;
 }
