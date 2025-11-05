@@ -85,8 +85,6 @@ function EachRouteShowInfo({
             {student.status}
           </ShowInfo>
         </div>
-        <div>Attendance Chart must be added.</div>
-        {/* <ChartHalfCircleForClassAttendance  /> */}
       </div>
     );
   }

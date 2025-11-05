@@ -29,11 +29,12 @@ function EachHeaderPerId({ data, type }: Props) {
     const branch = data as branches;
     return (
       <div>
-        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
+        <Heading fontSize="2.5rem" margin="1rem 0">
           Branch {branch.name} <BsHouseCheck color="var(--dark-brand-3)" />
         </Heading>
-        <SpecialText>{branch.city}</SpecialText>
-        <SpecialText>
+        <SpecialText>City: {branch.city}</SpecialText>
+        <SpecialText margin="0 0 0 .5rem">
+          Date of creation:{" "}
           {branch?.createdAt && new Date(branch.createdAt).toLocaleDateString()}
           <PiPencilLine />
         </SpecialText>
@@ -45,18 +46,16 @@ function EachHeaderPerId({ data, type }: Props) {
     const myClass = data as classes;
     return (
       <div>
-        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
+        <Heading fontSize="2.5rem" margin="1rem 0">
           Class: {myClass.name} <FaSchool color="var(--dark-brand-3)" />
         </Heading>
-        <SpecialText>
-          {toCamelCase(myClass.grade)} <PiChalkboardTeacher />
-        </SpecialText>
-        <SpecialText>
-          {myClass.branch.name}
+        <SpecialText>Grade: {toCamelCase(myClass.grade)}</SpecialText>
+        <SpecialText margin="0 0 0 .5rem">
+          Branch: {myClass.branch.name}
           <BsHouse />
         </SpecialText>
         {myClass?.createdAt && (
-          <SpecialText>
+          <SpecialText margin="0 0 0 .5rem">
             {new Date(myClass.createdAt).toLocaleDateString()}
             <PiPencilLine />
           </SpecialText>
@@ -68,11 +67,11 @@ function EachHeaderPerId({ data, type }: Props) {
     const teacher = data as teacherShape;
     return (
       <div>
-        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
+        <Heading fontSize="2.5rem" margin="1rem 0">
           Teacher: {`${teacher.firstName} ${teacher.lastName}`}
           <PiChalkboardTeacherThin color="var(--dark-brand-3)" />
         </Heading>
-        <SpecialText>
+        <SpecialText margin="0 0 0 .5rem">
           {teacher.phone}
           <PiPhoneCallThin />
         </SpecialText>
@@ -88,23 +87,25 @@ function EachHeaderPerId({ data, type }: Props) {
     const student = data as studentShape;
     return (
       <div>
-        <Heading fontSize="2.5rem" margin="1rem 0 0 0">
+        <Heading fontSize="2.5rem" margin="1rem 0">
           Student: {`${student.firstName} ${student.lastName}`}
           <PiStudentThin color="var(--dark-brand-3)" />
         </Heading>
         {student.dob && (
-          <SpecialText>Date of birth: {new Date(student.dob).toLocaleDateString()}</SpecialText>
+          <SpecialText margin="0 0 0 .5rem">
+            Date of birth: {new Date(student.dob).toLocaleDateString()}
+          </SpecialText>
         )}
-        <SpecialText>
-          {student.phone}
+        <SpecialText margin="0 0 0 .5rem">
+          Phone: {student.phone}
           <PiPhoneCallThin />
         </SpecialText>
         {student.address && (
-          <SpecialText>
+          <SpecialText margin="0 0 0 .5rem">
             <address>Home address: {student.address}</address>
           </SpecialText>
         )}
-        <SpecialText>{student.gender}</SpecialText>
+        <SpecialText margin="0 0 0 .5rem">Gender: {student.gender}</SpecialText>
       </div>
     );
   }

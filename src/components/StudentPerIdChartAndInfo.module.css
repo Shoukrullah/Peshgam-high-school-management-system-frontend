@@ -1,0 +1,16 @@
+/* .chartAndInfoContainerPerStudent {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+} */
+.chartAndInfoContainerPerStudent > div {
+    padding: 5rem 0 0 0;
+}
+.chartAndInfoContainerPerStudent > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.chartAndInfoContainerPerStudent > div:first-child svg {
+    margin: 0 auto !important;
+}

@@ -25,7 +25,7 @@
   color: var(--dark-brand-3);
 }
 
-.afterContainer > div:first-child::before {
+.afterContainer .firstChild::before {
   position: absolute;
   content: "";
   width: 2rem;
@@ -36,7 +36,7 @@
   border-radius: 100%;
   background-color: var(--green-brand-1);
 }
-.afterContainer > div:nth-child(2)::before {
+.afterContainer .secondChild::before {
   position: absolute;
   content: "";
   width: 2rem;
@@ -47,7 +47,7 @@
   border-radius: 100%;
   background-color: var(--red-brand-2);
 }
-.afterContainer > div:nth-child(3)::before {
+.afterContainer .thirdChild::before {
   position: absolute;
   content: "";
   width: 2rem;

@@ -49,7 +49,7 @@ export default function ChartHalfCircleForClassAttendance({
       </PieChart>
       <div className={styles.afterContainer}>
         {presentCount !== 0 && (
-          <div>
+          <div className={styles.firstChild}>
             <p>Present</p>
             <p>
               (
@@ -62,7 +62,7 @@ export default function ChartHalfCircleForClassAttendance({
           </div>
         )}
         {absentCount !== 0 && (
-          <div>
+          <div className={styles.secondChild}>
             <p>Absent</p>
             <p>
               (
@@ -75,7 +75,7 @@ export default function ChartHalfCircleForClassAttendance({
           </div>
         )}
         {problemCount !== 0 && (
-          <div>
+          <div className={styles.thirdChild}>
             <p>Problem</p>
             <p>
               (
