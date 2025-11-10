@@ -8,6 +8,7 @@ import toCamelCase from "../utils/toCamelCase";
 import LinkTo from "./LinkTo";
 import SpecialText from "./SpecialText";
 import styles from "./Table.module.css";
+import formatAF from "../utils/formatToAF";
 interface CommonProps {
   id: number;
 }
@@ -99,7 +100,7 @@ function EachTable<T extends TableData>({
                       </SpecialText>
                     }
                   </td>
-                  <td style={border}>{stu.phone || <RxDash />}</td>
+                  <td style={border}>{formatAF(stu.phone) || <RxDash />}</td>
                   <td style={border}>{stu.address || <RxDash />}</td>
                 </tr>
               );
@@ -115,7 +116,7 @@ function EachTable<T extends TableData>({
                       {teacher.firstName + " " + teacher.lastName}
                     </LinkTo>
                   </td>
-                  <td style={border}>{teacher.phone || <RxDash />}</td>
+                  <td style={border}>{formatAF(teacher.phone ) || <RxDash />}</td>
                   <td style={border}>{teacher.degree || <RxDash />}</td>
                   <td style={border}>{teacher.homeAddress || <RxDash />}</td>
                 </tr>

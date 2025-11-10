@@ -4,6 +4,7 @@ import type { studentShape } from "../types/students";
 import toCamelCase from "../utils/toCamelCase";
 import LinkTo from "./LinkTo";
 import styles from "./Table.module.css";
+import formatAF from "../utils/formatToAF";
 
 interface CommonProps {
   id: number;
@@ -83,7 +84,7 @@ function Table<T extends TableData>({
                   </td>
                   <td>{toCamelCase(stu.class?.grade || "")}</td>
                   <td>{stu.branch.name}</td>
-                  <td>{stu.phone || <RxDash />}</td>
+                  <td>{formatAF(stu.phone || '') || <RxDash />}</td>
                   <td>{stu.address || <RxDash />}</td>
                   <td>
                     <TableEditButtons route="students" id={stu.id} />
@@ -100,7 +101,7 @@ function Table<T extends TableData>({
                     <TableImage stu={teacher} href="teachers" />
                   </td>
                   <td>{teacher.branch.name}</td>
-                  <td>{teacher.phone || <RxDash />}</td>
+                  <td>{formatAF(teacher.phone || '') || <RxDash />}</td>
                   <td>{teacher.degree || <RxDash />}</td>
                   <td>{teacher.homeAddress || <RxDash />}</td>
                   <td>

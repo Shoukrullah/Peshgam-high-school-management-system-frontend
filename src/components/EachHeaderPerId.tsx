@@ -1,13 +1,10 @@
 import { BsHouse, BsHouseCheck } from "react-icons/bs";
 import { FaSchool } from "react-icons/fa";
 import {
-  PiChalkboardTeacher,
   PiChalkboardTeacherThin,
-  PiCityLight,
-  PiHouseLineThin,
   PiPencilLine,
   PiPhoneCallThin,
-  PiStudentThin,
+  PiStudentThin
 } from "react-icons/pi";
 import { Heading } from ".";
 import type { branches } from "../types/branches";
@@ -16,6 +13,7 @@ import type { studentShape } from "../types/students";
 import type { teacherShape } from "../types/teachers";
 import toCamelCase from "../utils/toCamelCase";
 import SpecialText from "./SpecialText";
+import formatAF from "../utils/formatToAF";
 
 interface Props {
   data: branches | classes | teacherShape | studentShape | null;
@@ -30,7 +28,7 @@ function EachHeaderPerId({ data, type }: Props) {
     return (
       <div>
         <Heading fontSize="2.5rem" margin="1rem 0">
-          Branch {branch.name} <BsHouseCheck color="var(--dark-brand-3)" />
+          Branch: {branch.name} <BsHouseCheck color="var(--dark-brand-3)" />
         </Heading>
         <SpecialText>City: {branch.city}</SpecialText>
         <SpecialText margin="0 0 0 .5rem">
@@ -72,7 +70,7 @@ function EachHeaderPerId({ data, type }: Props) {
           <PiChalkboardTeacherThin color="var(--dark-brand-3)" />
         </Heading>
         <SpecialText margin="0 0 0 .5rem">
-          {teacher.phone}
+          {formatAF(teacher.phone)}
           <PiPhoneCallThin />
         </SpecialText>
         {teacher.homeAddress && (
@@ -97,7 +95,7 @@ function EachHeaderPerId({ data, type }: Props) {
           </SpecialText>
         )}
         <SpecialText margin="0 0 0 .5rem">
-          Phone: {student.phone}
+          Phone: {formatAF(student.phone)}
           <PiPhoneCallThin />
         </SpecialText>
         {student.address && (

@@ -1,19 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import delay from "delay";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import useBranches from "../hooks/useBranches";
-import axiosInstance from "../services/axios-instance";
+import { useMutate } from "../hooks/useMutate";
+import { QUERY_KEYS } from "../services/constants";
 import teacherSchema from "../types/schemas/teacherSchema";
+import type { teacherShape } from "../types/teachers";
+import degree from "../utils/degree";
 import Form from "./Form";
 import Input from "./Input";
 import DropDownStructure from "./reactDropDown/DropDownStructure";
-import degree from "../utils/degree";
-import { useMutate } from "../hooks/useMutate";
-import type { teacherShape } from "../types/teachers";
-import { QUERY_KEYS } from "../services/constants";
 type FormShape = z.infer<typeof teacherSchema>;
 
 function CreateTeacher() {

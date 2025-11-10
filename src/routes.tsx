@@ -7,10 +7,10 @@ import Teacher from "./pages/Teacher";
 import Attendance from "./pages/Attendance";
 import Branch from "./pages/Branch";
 import ErrorPage from "./pages/ErrorPage";
-import BranchPerId from "./components/BranchPerId";
-import ClassPerId from "./components/ClassPerId";
-import TeacherPerId from "./components/TeacherPerId";
-import StudentPerId from "./components/StudentPerId";
+import BranchPerId from "./pages/BranchPerId";
+import ClassPerId from "./pages/ClassPerId";
+import TeacherPerId from "./pages/TeacherPerId";
+import StudentPerId from "./pages/StudentPerId";
 
 const router = createBrowserRouter([
   {

@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Error, Loading } from ".";
+import { Error, Loading } from "../components";
+import EachHeaderPerId from "../components/EachHeaderPerId";
+import EachRouteShowInfo from "../components/EachRouteShowInfo";
+import StudentPerIdChartAndInfo from "../components/StudentPerIdChartAndInfo";
 import { useStudent } from "../hooks/useStudents";
-import EachHeaderPerId from "./EachHeaderPerId";
-import EachRouteShowInfo from "./EachRouteShowInfo";
-import ChartStudentAttendancePerId from "./ChartStudentAttendancePerId";
-import StudentPerIdChartAndInfo from "./StudentPerIdChartAndInfo";
 
 function StudentPerId() {
   const params = useParams() || undefined;
@@ -21,7 +20,7 @@ function StudentPerId() {
     <div>
       <EachHeaderPerId data={data || null} type="students" />
       <EachRouteShowInfo data={data || null} type="students" />
-      <StudentPerIdChartAndInfo data={data} />
+      <StudentPerIdChartAndInfo data={data || null} />
     </div>
   );
 }

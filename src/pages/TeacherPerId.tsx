@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Error, Loading } from ".";
+import { Error, Loading } from "../components";
 import { useUniqueTeacher } from "../hooks/useTeachers";
-import EachHeaderPerId from "./EachHeaderPerId";
-import EachRouteShowInfo from "./EachRouteShowInfo";
-import TableForPerTeacher from "./TableForPerTeacher";
+import EachHeaderPerId from "../components/EachHeaderPerId";
+import EachRouteShowInfo from "../components/EachRouteShowInfo";
+import TableForPerTeacher from "../components/TableForPerTeacher";
 
 function TeacherPerId() {
   const params = useParams() || undefined;

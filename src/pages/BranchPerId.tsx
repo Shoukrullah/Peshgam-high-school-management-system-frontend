@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Error, Loading } from ".";
+import { Error, Loading } from "../components";
 import { useBranch } from "../hooks/useBranches";
-import EachHeaderPerId from "./EachHeaderPerId";
-import EachRouteShowInfo from "./EachRouteShowInfo";
-import TableForPerBranches from "./TableForPerBranches";
+import EachHeaderPerId from "../components/EachHeaderPerId";
+import EachRouteShowInfo from "../components/EachRouteShowInfo";
+import TableForPerBranches from "../components/TableForPerBranches";
 
 function BranchPerId() {
   const params = useParams() || undefined;
   const [showTable, setShowTable] = useState<
     "classes" | "students" | "teachers" | ""
-  >("");
+  >("classes");
   const id = params ? parseInt(params.id || "") : undefined;
   const { data, isLoading, error } = useBranch(id);
   useEffect(() => {
